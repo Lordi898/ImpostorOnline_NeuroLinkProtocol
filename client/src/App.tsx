@@ -4,6 +4,7 @@ import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
+import { LanguageProvider } from "@/lib/languageContext";
 import { JoinScreen } from "@/components/game/JoinScreen";
 import { LobbyScreen } from "@/components/game/LobbyScreen";
 import { RoleRevealScreen } from "@/components/game/RoleRevealScreen";
@@ -107,8 +108,9 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <div className="min-h-screen bg-background text-foreground">
+      <LanguageProvider>
+        <TooltipProvider>
+          <div className="min-h-screen bg-background text-foreground">
           {gameState.phase === 'join' && (
             <JoinScreen
               onCreateRoom={handleCreateRoom}
@@ -221,8 +223,9 @@ function App() {
           </div>
         )}
 
-        <Toaster />
-      </TooltipProvider>
+          <Toaster />
+        </TooltipProvider>
+      </LanguageProvider>
     </QueryClientProvider>
   );
 }
