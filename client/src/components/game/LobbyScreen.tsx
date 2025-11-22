@@ -72,6 +72,7 @@ export function LobbyScreen({
             messages={chatMessages}
             onSendMessage={onSendChatMessage}
             localPlayerId={localPlayerId}
+            className="min-h-[300px]"
           />
         </div>
       </div>

@@ -11,11 +11,14 @@ interface ChatProps {
   messages: ChatMessage[];
   onSendMessage: (text: string) => void;
   localPlayerId: string;
+  activePlayerId?: string;
+  secretWord?: string;
   className?: string;
 }
 
-export function Chat({ messages, onSendMessage, localPlayerId, className }: ChatProps) {
+export function Chat({ messages, onSendMessage, localPlayerId, activePlayerId, secretWord, className }: ChatProps) {
   const [inputText, setInputText] = useState('');
+  const [error, setError] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
@@ -28,10 +31,22 @@ export function Chat({ messages, onSendMessage, localPlayerId, className }: Chat
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (inputText.trim()) {
-      onSendMessage(inputText);
-      setInputText('');
+    if (!inputText.trim()) return;
+
+    // Validar que no contiene la palabra secreta
+    if (secretWord) {
+      const forbiddenWord = secretWord.toLowerCase();
+      const messageLower = inputText.toLowerCase();
+      if (messageLower.includes(forbiddenWord)) {
+        setError('Cannot send the secret word!');
+        setTimeout(() => setError(''), 3000);
+        return;
+      }
     }
+
+    onSendMessage(inputText);
+    setInputText('');
+    setError('');
   };
 
   const formatTime = (timestamp: number) => {
@@ -58,12 +73,15 @@ export function Chat({ messages, onSendMessage, localPlayerId, className }: Chat
           ) : (
             messages.map((message) => {
               const isOwnMessage = message.senderId === localPlayerId;
+              const isActivePlayer = message.senderId === activePlayerId;
               return (
                 <div
                   key={message.id}
                   className={cn(
-                    "flex flex-col gap-1 p-2 rounded border",
-                    isOwnMessage 
+                    "flex flex-col gap-1 p-2 md:p-3 rounded border transition-all",
+                    isActivePlayer && !isOwnMessage
+                      ? "bg-secondary/20 border-secondary/50 shadow-[0_0_15px_rgba(0,255,255,0.3)]" 
+                      : isOwnMessage 
                       ? "bg-primary/10 border-primary/30" 
                       : "bg-card/30 border-border/30"
                   )}
@@ -72,15 +90,20 @@ export function Chat({ messages, onSendMessage, localPlayerId, className }: Chat
                   <div className="flex items-center justify-between gap-2">
                     <span className={cn(
                       "text-xs font-bold tracking-wider",
+                      isActivePlayer && !isOwnMessage ? "text-secondary text-glow-cyan" :
                       isOwnMessage ? "text-primary" : "text-secondary"
                     )}>
                       {message.senderName}
+                      {isActivePlayer && " 🎯"}
                     </span>
                     <span className="text-xs text-muted-foreground">
                       {formatTime(message.timestamp)}
                     </span>
                   </div>
-                  <p className="text-sm break-words">
+                  <p className={cn(
+                    "text-sm md:text-base break-words",
+                    isActivePlayer && !isOwnMessage && "font-semibold"
+                  )}>
                     {message.text}
                   </p>
                 </div>
@@ -91,24 +114,34 @@ export function Chat({ messages, onSendMessage, localPlayerId, className }: Chat
         </div>
       </ScrollArea>
 
-      <form onSubmit={handleSubmit} className="flex gap-2 mt-4 pt-4 border-t border-primary/30">
-        <Input
-          value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
-          placeholder="TYPE MESSAGE..."
-          className="flex-1 uppercase font-mono"
-          maxLength={200}
-          data-testid="input-chat-message"
-        />
-        <Button
-          type="submit"
-          size="icon"
-          disabled={!inputText.trim()}
-          className="border-2 border-primary shadow-[0_0_10px_rgba(0,255,0,0.5)]"
-          data-testid="button-send-message"
-        >
-          <Send className="h-4 w-4" />
-        </Button>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2 mt-4 pt-4 border-t border-primary/30">
+        {error && (
+          <div className="text-xs text-destructive bg-destructive/10 border border-destructive/30 rounded px-2 py-1 animate-pulse">
+            {error}
+          </div>
+        )}
+        <div className="flex gap-2">
+          <Input
+            value={inputText}
+            onChange={(e) => {
+              setInputText(e.target.value);
+              setError('');
+            }}
+            placeholder="TYPE MESSAGE..."
+            className="flex-1 uppercase font-mono text-sm md:text-base min-h-[44px]"
+            maxLength={200}
+            data-testid="input-chat-message"
+          />
+          <Button
+            type="submit"
+            size="icon"
+            disabled={!inputText.trim()}
+            className="border-2 border-primary shadow-[0_0_10px_rgba(0,255,0,0.5)] min-h-[44px] min-w-[44px] touch-manipulation"
+            data-testid="button-send-message"
+          >
+            <Send className="h-4 w-4 md:h-5 md:w-5" />
+          </Button>
+        </div>
       </form>
     </TerminalCard>
   );

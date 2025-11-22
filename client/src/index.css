@@ -396,4 +396,20 @@
       linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
     background-size: 20px 20px;
   }
+
+  /* Mejoras para táctil en móviles */
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Efecto visual cuando es tu turno */
+  @keyframes turn-pulse {
+    0%, 100% {
+      background-color: rgba(0, 255, 0, 0.05);
+    }
+    50% {
+      background-color: rgba(0, 255, 0, 0.1);
+    }
+  }
 }
