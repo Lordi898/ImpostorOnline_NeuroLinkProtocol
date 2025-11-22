@@ -275,18 +275,25 @@ export class GameController {
   endTurn(): void {
     this.gameState.endTurn();
 
-    if (this.gameState.isLocalPlayerHost()) {
-      this.p2p.broadcast({
-        type: 'turn-end',
-        data: {}
-      });
+    // Broadcast to everyone that the turn ended
+    this.p2p.broadcast({
+      type: 'turn-end',
+      data: {}
+    });
 
+    // Only host calculates next turn
+    if (this.gameState.isLocalPlayerHost()) {
       this.nextTurn();
     }
   }
 
   private handleTurnEnd(): void {
     this.gameState.endTurn();
+
+    // If we're the host, calculate next turn
+    if (this.gameState.isLocalPlayerHost()) {
+      this.nextTurn();
+    }
   }
 
   private nextTurn(): void {
