@@ -1,6 +1,6 @@
 import Peer, { DataConnection } from 'peerjs';
 
-export type MessageType = 
+export type MessageType =
   | 'player-join'
   | 'player-leave'
   | 'start-game'
@@ -34,7 +34,7 @@ export class P2PManager {
   private localPlayerName: string = '';
   private isHost: boolean = false;
   private roomCode: string = '';
-  
+
   private onMessageCallback: ((message: P2PMessage) => void) | null = null;
   private onPlayerJoinCallback: ((player: PlayerConnection) => void) | null = null;
   private onPlayerLeaveCallback: ((playerId: string) => void) | null = null;
@@ -45,7 +45,7 @@ export class P2PManager {
     this.localPlayerName = playerName;
     this.isHost = true;
     this.roomCode = this.generateRoomCode();
-    
+
     return new Promise((resolve, reject) => {
       this.peer = new Peer(this.roomCode, {
         debug: 2,
@@ -82,9 +82,9 @@ export class P2PManager {
       this.peer.on('open', (id) => {
         this.localPlayerId = id;
         console.log('[P2P] Peer ID:', id);
-        
+
         const conn = this.peer!.connect(roomCode);
-        
+
         const hostConnection: PlayerConnection = {
           id: roomCode,
           name: 'HOST',
@@ -92,9 +92,9 @@ export class P2PManager {
           isHost: true
         };
         this.connections.set(roomCode, hostConnection);
-        
+
         this.setupConnection(conn, playerName, true);
-        
+
         conn.on('open', () => {
           console.log('[P2P] Connected to room:', roomCode);
           resolve();
@@ -117,12 +117,12 @@ export class P2PManager {
 
   private handleIncomingConnection(conn: DataConnection): void {
     console.log('[P2P] Incoming connection from:', conn.peer);
-    
+
     let playerName = '';
-    
+
     conn.on('data', (data: any) => {
       const message = data as P2PMessage;
-      
+
       if (message.type === 'player-join' && !this.connections.has(conn.peer)) {
         playerName = message.data.playerName;
         const playerConnection: PlayerConnection = {
@@ -131,16 +131,16 @@ export class P2PManager {
           connection: conn,
           isHost: false
         };
-        
+
         this.connections.set(conn.peer, playerConnection);
         this.onPlayerJoinCallback?.(playerConnection);
-        
+
         this.syncStateToPlayer(conn.peer);
         this.broadcastToOthers({
           type: 'player-join',
-          data: { 
-            playerId: conn.peer, 
-            playerName 
+          data: {
+            playerId: conn.peer,
+            playerName
           },
           senderId: this.localPlayerId,
           timestamp: Date.now()
@@ -155,7 +155,7 @@ export class P2PManager {
       const playerId = conn.peer;
       this.connections.delete(playerId);
       this.onPlayerLeaveCallback?.(playerId);
-      
+
       if (this.isHost) {
         this.broadcast({
           type: 'player-leave',
@@ -241,7 +241,7 @@ export class P2PManager {
       name: p.name,
       isHost: p.isHost
     }));
-    
+
     allPlayers.push({
       id: this.localPlayerId,
       name: this.localPlayerName,
@@ -252,7 +252,7 @@ export class P2PManager {
 
     this.sendMessage({
       type: 'sync-state',
-      data: { 
+      data: {
         players: allPlayers,
         ...additionalData
       }
@@ -277,6 +277,11 @@ export class P2PManager {
 
   onGetSyncData(callback: () => any): void {
     this.getSyncDataCallback = callback;
+  }
+
+  getTurnRotationOffset(): number {
+    const syncData = this.onGetSyncDataCallback?.() || {};
+    return syncData.turnRotationOffset || 0;
   }
 
   getLocalPlayerId(): string {

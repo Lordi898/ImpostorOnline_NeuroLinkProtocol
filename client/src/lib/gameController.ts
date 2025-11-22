@@ -43,7 +43,8 @@ export class GameController {
     this.p2p.onGetSyncData(() => {
       const state = this.gameState.getState();
       return {
-        chatMessages: state.chatMessages
+        chatMessages: state.chatMessages,
+        turnRotationOffset: state.turnRotationOffset
       };
     });
   }
@@ -149,7 +150,7 @@ export class GameController {
   }
 
   private handleSyncState(message: P2PMessage): void {
-    const { players, chatMessages } = message.data;
+    const { players, chatMessages, turnRotationOffset } = message.data;
     
     if (players) {
       const gamePlayers: GamePlayer[] = players.map((p: any) => ({
@@ -171,7 +172,8 @@ export class GameController {
 
       this.gameState.setState({
         players: gamePlayers,
-        hostPlayerId: players.find((p: any) => p.isHost)?.id || message.senderId
+        hostPlayerId: players.find((p: any) => p.isHost)?.id || message.senderId,
+        turnRotationOffset: turnRotationOffset !== undefined ? turnRotationOffset : 0
       });
     }
     
@@ -252,7 +254,8 @@ export class GameController {
 
     if (eligiblePlayers.length === 0) return;
 
-    const firstPlayerId = eligiblePlayers[0].id;
+    const startIndex = state.turnRotationOffset % eligiblePlayers.length;
+    const firstPlayerId = eligiblePlayers[startIndex].id;
     this.gameState.startTurn(firstPlayerId);
     this.gameState.setPhase('gameplay');
 

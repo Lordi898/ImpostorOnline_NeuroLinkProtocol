@@ -31,6 +31,7 @@ export interface GameState {
   winner?: 'hackers' | 'impostor';
   impostorPlayerId?: string;
   chatMessages: ChatMessage[];
+  turnRotationOffset: number;
 }
 
 export class GameStateManager {
@@ -48,7 +49,8 @@ export class GameStateManager {
       turnTimeRemaining: 60,
       playOnHost: false,
       votes: new Map(),
-      chatMessages: []
+      chatMessages: [],
+      turnRotationOffset: 0
     };
   }
 
@@ -181,6 +183,7 @@ export class GameStateManager {
       winner: undefined,
       impostorPlayerId: undefined,
       chatMessages: [],
+      turnRotationOffset: this.state.turnRotationOffset + 1,
       players: this.state.players.map(p => ({
         ...p,
         isImpostor: false,
