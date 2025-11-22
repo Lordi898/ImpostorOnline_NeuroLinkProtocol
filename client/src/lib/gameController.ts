@@ -8,7 +8,6 @@ import { type GamePlayer } from './gameState';
 export class GameController {
   private p2p: P2PManager;
   private gameState: GameStateManager;
-  private apiKey: string = '';
 
   constructor() {
     this.p2p = new P2PManager();
@@ -144,7 +143,7 @@ export class GameController {
 
     this.gameState.setState({ playOnHost });
 
-    const secretWord = await generateSecretWord(this.apiKey);
+    const secretWord = await generateSecretWord();
     console.log('[GAME] Generated secret word:', secretWord);
 
     const players = this.gameState.getState().players;
@@ -370,9 +369,6 @@ export class GameController {
     this.gameState.resetForNewGame();
   }
 
-  setApiKey(key: string): void {
-    this.apiKey = key;
-  }
 
   getState() {
     return this.gameState.getState();
