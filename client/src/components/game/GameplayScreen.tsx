@@ -3,6 +3,8 @@ import { PlayerList, type Player } from '../PlayerList';
 import { TerminalCard } from '../TerminalCard';
 import { NeonButton } from '../NeonButton';
 import { GlitchText } from '../GlitchText';
+import { Chat } from '../Chat';
+import { type ChatMessage } from '@/lib/gameState';
 
 interface GameplayScreenProps {
   players: Player[];
@@ -14,6 +16,9 @@ interface GameplayScreenProps {
   category?: string;
   onNoiseBomb?: () => void;
   onEndTurn: () => void;
+  chatMessages: ChatMessage[];
+  onSendChatMessage: (text: string) => void;
+  localPlayerId: string;
 }
 
 export function GameplayScreen({
@@ -25,7 +30,10 @@ export function GameplayScreen({
   secretWord,
   category,
   onNoiseBomb,
-  onEndTurn
+  onEndTurn,
+  chatMessages,
+  onSendChatMessage,
+  localPlayerId
 }: GameplayScreenProps) {
   const activePlayer = players.find(p => p.id === activePlayerId);
 
@@ -77,10 +85,16 @@ export function GameplayScreen({
         </TerminalCard>
       </div>
 
-      <div className="max-w-2xl mx-auto w-full">
+      <div className="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto w-full">
         <TerminalCard title="CONNECTED USERS" scanline={false}>
           <PlayerList players={players} activePlayerId={activePlayerId} />
         </TerminalCard>
+
+        <Chat
+          messages={chatMessages}
+          onSendMessage={onSendChatMessage}
+          localPlayerId={localPlayerId}
+        />
       </div>
 
       <div className="flex gap-4 justify-center flex-wrap">

@@ -1,5 +1,5 @@
 import { P2PManager, type P2PMessage, type PlayerConnection } from './p2p';
-import { GameStateManager, type GamePhase } from './gameState';
+import { GameStateManager, type GamePhase, type ChatMessage } from './gameState';
 import { generateSecretWord } from './gameMaster';
 import { soundManager } from './soundManager';
 import { wakeLockManager } from './wakeLock';
@@ -39,6 +39,13 @@ export class GameController {
     this.p2p.onConnectionError((error: Error) => {
       console.error('[GAME] Connection error:', error);
     });
+
+    this.p2p.onGetSyncData(() => {
+      const state = this.gameState.getState();
+      return {
+        chatMessages: state.chatMessages
+      };
+    });
   }
 
   private handleP2PMessage(message: P2PMessage): void {
@@ -74,6 +81,9 @@ export class GameController {
         break;
       case 'noise-bomb':
         this.handleNoiseBomb();
+        break;
+      case 'chat-message':
+        this.handleChatMessage(message);
         break;
     }
   }
@@ -139,29 +149,37 @@ export class GameController {
   }
 
   private handleSyncState(message: P2PMessage): void {
-    const { players } = message.data;
+    const { players, chatMessages } = message.data;
     
-    const gamePlayers: GamePlayer[] = players.map((p: any) => ({
-      id: p.id,
-      name: p.name,
-      isHost: p.isHost,
-      signalStrength: 100
-    }));
-
-    const localPlayerId = this.gameState.getState().localPlayerId;
-    if (!gamePlayers.find(p => p.id === localPlayerId)) {
-      gamePlayers.push({
-        id: localPlayerId,
-        name: this.p2p.getLocalPlayerName(),
-        isHost: false,
+    if (players) {
+      const gamePlayers: GamePlayer[] = players.map((p: any) => ({
+        id: p.id,
+        name: p.name,
+        isHost: p.isHost,
         signalStrength: 100
+      }));
+
+      const localPlayerId = this.gameState.getState().localPlayerId;
+      if (!gamePlayers.find(p => p.id === localPlayerId)) {
+        gamePlayers.push({
+          id: localPlayerId,
+          name: this.p2p.getLocalPlayerName(),
+          isHost: false,
+          signalStrength: 100
+        });
+      }
+
+      this.gameState.setState({
+        players: gamePlayers,
+        hostPlayerId: players.find((p: any) => p.isHost)?.id || message.senderId
       });
     }
-
-    this.gameState.setState({
-      players: gamePlayers,
-      hostPlayerId: players.find((p: any) => p.isHost)?.id || message.senderId
-    });
+    
+    if (chatMessages && Array.isArray(chatMessages)) {
+      chatMessages.forEach((msg: ChatMessage) => {
+        this.gameState.addChatMessage(msg);
+      });
+    }
   }
 
   async startGame(playOnHost: boolean): Promise<void> {
@@ -394,10 +412,36 @@ export class GameController {
   }
 
   backToLobby(): void {
-    this.gameState.setPhase('lobby');
     this.gameState.resetForNewGame();
   }
 
+
+  sendChatMessage(text: string): void {
+    const state = this.gameState.getState();
+    const player = state.players.find(p => p.id === state.localPlayerId);
+    
+    if (!player || !text.trim()) return;
+
+    const chatMessage: ChatMessage = {
+      id: `${state.localPlayerId}-${Date.now()}`,
+      senderId: state.localPlayerId,
+      senderName: player.name,
+      text: text.trim(),
+      timestamp: Date.now()
+    };
+
+    this.gameState.addChatMessage(chatMessage);
+
+    this.p2p.broadcast({
+      type: 'chat-message',
+      data: chatMessage
+    });
+  }
+
+  private handleChatMessage(message: P2PMessage): void {
+    const chatMessage = message.data as ChatMessage;
+    this.gameState.addChatMessage(chatMessage);
+  }
 
   setPlayOnHost(value: boolean): void {
     this.gameState.setState({ playOnHost: value });

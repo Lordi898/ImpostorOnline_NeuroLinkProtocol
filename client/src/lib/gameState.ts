@@ -3,6 +3,14 @@ import { type WordData } from '@/data/fallbackWords';
 
 export type GamePhase = 'join' | 'lobby' | 'role-reveal' | 'gameplay' | 'voting' | 'game-over';
 
+export interface ChatMessage {
+  id: string;
+  senderId: string;
+  senderName: string;
+  text: string;
+  timestamp: number;
+}
+
 export interface GamePlayer extends Player {
   isImpostor?: boolean;
   hasVoted?: boolean;
@@ -22,6 +30,7 @@ export interface GameState {
   votes: Map<string, string>;
   winner?: 'hackers' | 'impostor';
   impostorPlayerId?: string;
+  chatMessages: ChatMessage[];
 }
 
 export class GameStateManager {
@@ -38,7 +47,8 @@ export class GameStateManager {
       hostPlayerId: '',
       turnTimeRemaining: 15,
       playOnHost: false,
-      votes: new Map()
+      votes: new Map(),
+      chatMessages: []
     };
   }
 
@@ -148,6 +158,18 @@ export class GameStateManager {
     this.notifyStateChange();
   }
 
+  addChatMessage(message: ChatMessage): void {
+    if (!this.state.chatMessages.find(m => m.id === message.id)) {
+      this.state.chatMessages.push(message);
+      this.notifyStateChange();
+    }
+  }
+
+  clearChat(): void {
+    this.state.chatMessages = [];
+    this.notifyStateChange();
+  }
+
   resetForNewGame(): void {
     this.state = {
       ...this.state,
@@ -158,6 +180,7 @@ export class GameStateManager {
       votes: new Map(),
       winner: undefined,
       impostorPlayerId: undefined,
+      chatMessages: [],
       players: this.state.players.map(p => ({
         ...p,
         isImpostor: false,

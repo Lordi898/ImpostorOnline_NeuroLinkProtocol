@@ -10,7 +10,8 @@ export type MessageType =
   | 'vote-cast'
   | 'game-over'
   | 'noise-bomb'
-  | 'sync-state';
+  | 'sync-state'
+  | 'chat-message';
 
 export interface P2PMessage {
   type: MessageType;
@@ -38,6 +39,7 @@ export class P2PManager {
   private onPlayerJoinCallback: ((player: PlayerConnection) => void) | null = null;
   private onPlayerLeaveCallback: ((playerId: string) => void) | null = null;
   private onConnectionErrorCallback: ((error: Error) => void) | null = null;
+  private getSyncDataCallback: (() => any) | null = null;
 
   async createRoom(playerName: string): Promise<string> {
     this.localPlayerName = playerName;
@@ -246,9 +248,14 @@ export class P2PManager {
       isHost: this.isHost
     });
 
+    const additionalData = this.getSyncDataCallback?.() || {};
+
     this.sendMessage({
       type: 'sync-state',
-      data: { players: allPlayers }
+      data: { 
+        players: allPlayers,
+        ...additionalData
+      }
     }, playerId);
   }
 
@@ -266,6 +273,10 @@ export class P2PManager {
 
   onConnectionError(callback: (error: Error) => void): void {
     this.onConnectionErrorCallback = callback;
+  }
+
+  onGetSyncData(callback: () => any): void {
+    this.getSyncDataCallback = callback;
   }
 
   getLocalPlayerId(): string {

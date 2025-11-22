@@ -4,8 +4,10 @@ import { PlayerList, type Player } from '../PlayerList';
 import { TerminalCard } from '../TerminalCard';
 import { NeonButton } from '../NeonButton';
 import { GlitchText } from '../GlitchText';
+import { Chat } from '../Chat';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
+import { type ChatMessage } from '@/lib/gameState';
 
 interface LobbyScreenProps {
   roomCode: string;
@@ -14,6 +16,9 @@ interface LobbyScreenProps {
   onStartGame: () => void;
   playOnHost: boolean;
   onPlayOnHostChange: (value: boolean) => void;
+  chatMessages: ChatMessage[];
+  onSendChatMessage: (text: string) => void;
+  localPlayerId: string;
 }
 
 export function LobbyScreen({
@@ -22,7 +27,10 @@ export function LobbyScreen({
   isHost,
   onStartGame,
   playOnHost,
-  onPlayOnHostChange
+  onPlayOnHostChange,
+  chatMessages,
+  onSendChatMessage,
+  localPlayerId
 }: LobbyScreenProps) {
   return (
     <div className="min-h-screen p-4 md:p-8 flex flex-col items-center justify-center gap-8">
@@ -31,7 +39,7 @@ export function LobbyScreen({
       </GlitchText>
       <p className="text-secondary text-sm">PROTOCOL ZERO</p>
 
-      <div className="w-full max-w-4xl grid gap-6 md:grid-cols-2">
+      <div className="w-full max-w-6xl grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <div className="flex flex-col gap-4">
           <QRCodeDisplay value={`NEURO-LINK://JOIN/${roomCode}`} size={200} />
           
@@ -58,6 +66,14 @@ export function LobbyScreen({
             {players.length} / 10 PLAYERS
           </div>
         </TerminalCard>
+
+        <div className="md:col-span-2 lg:col-span-1">
+          <Chat
+            messages={chatMessages}
+            onSendMessage={onSendChatMessage}
+            localPlayerId={localPlayerId}
+          />
+        </div>
       </div>
 
       {isHost && players.length >= 3 && (

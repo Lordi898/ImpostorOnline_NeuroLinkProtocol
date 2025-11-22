@@ -90,6 +90,10 @@ function App() {
     gameController.setPlayOnHost(value);
   };
 
+  const handleSendChatMessage = (text: string) => {
+    gameController.sendChatMessage(text);
+  };
+
   const localPlayer = gameState.players.find(p => p.id === gameState.localPlayerId);
   const isHost = gameState.localPlayerId === gameState.hostPlayerId;
   const isImpostor = localPlayer?.isImpostor || false;
@@ -120,6 +124,9 @@ function App() {
               onStartGame={handleStartGame}
               playOnHost={gameState.playOnHost}
               onPlayOnHostChange={handlePlayOnHostChange}
+              chatMessages={gameState.chatMessages}
+              onSendChatMessage={handleSendChatMessage}
+              localPlayerId={gameState.localPlayerId}
             />
           )}
 
@@ -143,6 +150,9 @@ function App() {
               category={gameState.secretWord?.category}
               onNoiseBomb={isImpostor ? handleNoiseBomb : undefined}
               onEndTurn={handleEndTurn}
+              chatMessages={gameState.chatMessages}
+              onSendChatMessage={handleSendChatMessage}
+              localPlayerId={gameState.localPlayerId}
             />
           )}
 
