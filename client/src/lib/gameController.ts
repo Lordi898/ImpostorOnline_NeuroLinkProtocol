@@ -399,6 +399,10 @@ export class GameController {
   }
 
 
+  setPlayOnHost(value: boolean): void {
+    this.gameState.setState({ playOnHost: value });
+  }
+
   getState() {
     return this.gameState.getState();
   }

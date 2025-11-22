@@ -94,8 +94,7 @@ function App() {
   };
 
   const handlePlayOnHostChange = (value: boolean) => {
-    gameController.getState().playOnHost = value;
-    setGameState({ ...gameController.getState(), playOnHost: value });
+    gameController.setPlayOnHost(value);
   };
 
   const localPlayer = gameState.players.find(p => p.id === gameState.localPlayerId);
