@@ -48,6 +48,12 @@ export class GameController {
       case 'sync-state':
         this.handleSyncState(message);
         break;
+      case 'player-join':
+        this.handlePlayerJoinMessage(message);
+        break;
+      case 'player-leave':
+        this.handlePlayerLeaveMessage(message);
+        break;
       case 'start-game':
         this.handleStartGame(message);
         break;
@@ -70,6 +76,29 @@ export class GameController {
         this.handleNoiseBomb();
         break;
     }
+  }
+
+  private handlePlayerJoinMessage(message: P2PMessage): void {
+    const { playerId, playerName } = message.data;
+    
+    if (!this.gameState.getState().players.find(p => p.id === playerId)) {
+      const gamePlayer: GamePlayer = {
+        id: playerId,
+        name: playerName,
+        isHost: false,
+        signalStrength: 100
+      };
+      this.gameState.addPlayer(gamePlayer);
+      soundManager.playSynthSound('connect');
+      console.log('[GAME] Player joined via broadcast:', playerName);
+    }
+  }
+
+  private handlePlayerLeaveMessage(message: P2PMessage): void {
+    const { playerId } = message.data;
+    this.gameState.removePlayer(playerId);
+    soundManager.playSynthSound('error');
+    console.log('[GAME] Player left via broadcast:', playerId);
   }
 
   async createRoom(playerName: string): Promise<void> {

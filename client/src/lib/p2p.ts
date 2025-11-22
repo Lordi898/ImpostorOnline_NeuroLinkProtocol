@@ -150,8 +150,16 @@ export class P2PManager {
 
     conn.on('close', () => {
       console.log('[P2P] Connection closed:', conn.peer);
-      this.connections.delete(conn.peer);
-      this.onPlayerLeaveCallback?.(conn.peer);
+      const playerId = conn.peer;
+      this.connections.delete(playerId);
+      this.onPlayerLeaveCallback?.(playerId);
+      
+      if (this.isHost) {
+        this.broadcast({
+          type: 'player-leave',
+          data: { playerId }
+        });
+      }
     });
 
     conn.on('error', (error) => {
