@@ -1,0 +1,17 @@
+{
+  "name": "NEURO-LINK: Protocol Zero",
+  "short_name": "NEURO-LINK",
+  "description": "A P2P cyberpunk social deduction game",
+  "start_url": "/",
+  "display": "fullscreen",
+  "background_color": "#050505",
+  "theme_color": "#00ff00",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
