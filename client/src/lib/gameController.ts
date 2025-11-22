@@ -451,6 +451,14 @@ export class GameController {
   private handleChatMessage(message: P2PMessage): void {
     const chatMessage = message.data as ChatMessage;
     this.gameState.addChatMessage(chatMessage);
+    
+    // If we're the host and received a chat message from a peer, relay it to all other peers
+    if (this.gameState.isLocalPlayerHost() && message.senderId !== this.gameState.getState().localPlayerId) {
+      this.p2p.broadcast({
+        type: 'chat-message',
+        data: chatMessage
+      });
+    }
   }
 
   setPlayOnHost(value: boolean): void {
