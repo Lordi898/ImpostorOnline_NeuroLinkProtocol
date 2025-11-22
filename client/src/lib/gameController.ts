@@ -184,7 +184,7 @@ export class GameController {
     }
   }
 
-  async startGame(playOnHost: boolean): Promise<void> {
+  async startGame(playOnHost: boolean, language: 'en' | 'es' = 'en'): Promise<void> {
     if (!this.gameState.isLocalPlayerHost()) {
       console.error('[GAME] Only host can start game');
       return;
@@ -192,7 +192,7 @@ export class GameController {
 
     this.gameState.setState({ playOnHost });
 
-    const secretWord = await generateSecretWord();
+    const secretWord = await generateSecretWord(language);
     console.log('[GAME] Generated secret word:', secretWord);
 
     const players = this.gameState.getState().players;

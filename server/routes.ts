@@ -30,21 +30,57 @@ const fallbackWords: WordData[] = [
   { word: "DOLPHIN", category: "ANIMAL" }
 ];
 
-function getRandomFallbackWord(): WordData {
-  return fallbackWords[Math.floor(Math.random() * fallbackWords.length)];
+function getRandomFallbackWord(language: string = 'en'): WordData {
+  const words = language === 'es' ? fallbackWordsES : fallbackWords;
+  return words[Math.floor(Math.random() * words.length)];
 }
 
-async function generateWordWithGemini(): Promise<WordData> {
+const fallbackWordsES: WordData[] = [
+  { word: "DRON", category: "TECNOLOGÍA" },
+  { word: "CORTAFUEGOS", category: "TECNOLOGÍA" },
+  { word: "ORDENADOR PORTÁTIL", category: "TECNOLOGÍA" },
+  { word: "PIZZA", category: "COMIDA" },
+  { word: "SUSHI", category: "COMIDA" },
+  { word: "ASTRONAUTA", category: "PROFESIÓN" },
+  { word: "DETECTIVE", category: "PROFESIÓN" },
+  { word: "PARÍS", category: "UBICACIÓN" },
+  { word: "TOKIO", category: "UBICACIÓN" },
+  { word: "MOTOCICLETA", category: "VEHÍCULO" },
+  { word: "HELICÓPTERO", category: "VEHÍCULO" },
+  { word: "UNICORNIO", category: "ANIMAL" },
+  { word: "DRAGÓN", category: "ANIMAL" },
+  { word: "GUITARRA", category: "INSTRUMENTO" },
+  { word: "SINTETIZADOR", category: "INSTRUMENTO" },
+  { word: "HACKEO", category: "ACTIVIDAD" },
+  { word: "PARKOUR", category: "ACTIVIDAD" },
+  { word: "INVISIBILIDAD", category: "SUPERPODER" },
+  { word: "TELETRANSPORTACIÓN", category: "SUPERPODER" },
+  { word: "AURICULARES", category: "OBJETO" }
+];
+
+async function generateWordWithGemini(language: string = 'en'): Promise<WordData> {
   const apiKey = process.env.GEMINI_API_KEY;
   
   if (!apiKey || apiKey.trim() === '') {
     console.log('[SERVER] No Gemini API key, using fallback');
-    return getRandomFallbackWord();
+    return getRandomFallbackWord(language);
   }
 
   try {
     const genAI = new GoogleGenAI({ apiKey });
-    const prompt = `Generate a single random word suitable for a social deduction game. The word should be:
+    const isSpanish = language === 'es';
+    const prompt = isSpanish 
+      ? `Genera una palabra aleatoria adecuada para un juego de deducción social. La palabra debe ser:
+- Un sustantivo concreto (no abstracto)
+- Fácil de describir sin decirla directamente
+- Suficientemente común para que la mayoría la conozca
+- Una o dos palabras máximo
+- De categorías como: tecnología, comida, profesiones, ubicaciones, vehículos, animales, objetos
+
+Responde SOLO con la palabra en MAYÚSCULAS, seguida de un carácter de barra vertical, luego la categoría en MAYÚSCULAS.
+Formato de ejemplo: PIZZA|COMIDA
+No incluyas ningún otro texto.`
+      : `Generate a single random word suitable for a social deduction game. The word should be:
 - A concrete noun (not abstract)
 - Easy to describe without saying it directly
 - Common enough that most people know it
@@ -79,11 +115,13 @@ Do not include any other text.`;
 export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/generate-word', async (req, res) => {
     try {
-      const wordData = await generateWordWithGemini();
+      const { language = 'en' } = req.body;
+      const wordData = await generateWordWithGemini(language);
       res.json(wordData);
     } catch (error) {
       console.error('[SERVER] Word generation error:', error);
-      res.json(getRandomFallbackWord());
+      const { language = 'en' } = req.body;
+      res.json(getRandomFallbackWord(language));
     }
   });
 

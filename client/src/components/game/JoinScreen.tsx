@@ -1,9 +1,12 @@
+
 import { useState } from 'react';
 import { GlitchText } from '../GlitchText';
 import { NeonButton } from '../NeonButton';
 import { TerminalCard } from '../TerminalCard';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useLanguage } from '@/lib/languageContext';
 
 interface JoinScreenProps {
   onCreateRoom: (playerName: string) => void;
@@ -14,6 +17,7 @@ export function JoinScreen({ onCreateRoom, onJoinRoom }: JoinScreenProps) {
   const [playerName, setPlayerName] = useState('');
   const [roomCode, setRoomCode] = useState('');
   const [mode, setMode] = useState<'menu' | 'create' | 'join'>('menu');
+  const { language, setLanguage, theme, setTheme, t } = useLanguage();
 
   const handleCreateRoom = () => {
     if (playerName.trim()) {
@@ -31,12 +35,42 @@ export function JoinScreen({ onCreateRoom, onJoinRoom }: JoinScreenProps) {
     <div className="min-h-screen p-4 flex flex-col items-center justify-center gap-8 scanline">
       <div className="text-center space-y-4">
         <GlitchText className="text-5xl md:text-7xl block">
-          NEURO-LINK
+          {t('neuroLink')}
         </GlitchText>
-        <p className="text-secondary text-lg">PROTOCOL ZERO</p>
+        <p className="text-secondary text-lg">{t('protocolZero')}</p>
         <p className="text-sm text-muted-foreground max-w-md">
-          A P2P CYBERPUNK SOCIAL DEDUCTION GAME
+          {t('gameDescription')}
         </p>
+      </div>
+
+      {/* Theme and Language Selectors */}
+      <div className="flex gap-4 flex-wrap justify-center">
+        <div className="flex flex-col gap-2">
+          <Label className="text-xs">{t('theme')}</Label>
+          <Select value={theme} onValueChange={(value) => setTheme(value as 'dark' | 'normal' | 'light')}>
+            <SelectTrigger className="w-32">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="dark">{t('themeDark')}</SelectItem>
+              <SelectItem value="normal">{t('themeNormal')}</SelectItem>
+              <SelectItem value="light">{t('themeLight')}</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <Label className="text-xs">{t('language')}</Label>
+          <Select value={language} onValueChange={(value) => setLanguage(value as 'en' | 'es')}>
+            <SelectTrigger className="w-32">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="en">ENGLISH</SelectItem>
+              <SelectItem value="es">ESPAÑOL</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {mode === 'menu' && (
@@ -47,7 +81,7 @@ export function JoinScreen({ onCreateRoom, onJoinRoom }: JoinScreenProps) {
             data-testid="button-create-room"
             className="w-full"
           >
-            HOST GAME
+            {t('hostGame')}
           </NeonButton>
           <NeonButton 
             variant="outline"
@@ -56,21 +90,21 @@ export function JoinScreen({ onCreateRoom, onJoinRoom }: JoinScreenProps) {
             data-testid="button-join-room"
             className="w-full"
           >
-            JOIN GAME
+            {t('joinGame')}
           </NeonButton>
         </div>
       )}
 
       {mode === 'create' && (
-        <TerminalCard title="HOST NEW GAME" className="w-full max-w-md">
+        <TerminalCard title={t('hostNewGame')} className="w-full max-w-md">
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="player-name">PLAYER NAME</Label>
+              <Label htmlFor="player-name">{t('playerName')}</Label>
               <Input
                 id="player-name"
                 value={playerName}
                 onChange={(e) => setPlayerName(e.target.value)}
-                placeholder="ENTER YOUR NAME"
+                placeholder={t('enterYourName')}
                 className="uppercase"
                 maxLength={20}
                 data-testid="input-player-name"
@@ -83,14 +117,14 @@ export function JoinScreen({ onCreateRoom, onJoinRoom }: JoinScreenProps) {
                 data-testid="button-confirm-create"
                 className="flex-1"
               >
-                CREATE
+                {t('create')}
               </NeonButton>
               <NeonButton 
                 variant="outline"
                 onClick={() => setMode('menu')}
                 data-testid="button-back"
               >
-                BACK
+                {t('back')}
               </NeonButton>
             </div>
           </div>
@@ -98,27 +132,27 @@ export function JoinScreen({ onCreateRoom, onJoinRoom }: JoinScreenProps) {
       )}
 
       {mode === 'join' && (
-        <TerminalCard title="JOIN EXISTING GAME" className="w-full max-w-md">
+        <TerminalCard title={t('joinExistingGame')} className="w-full max-w-md">
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="player-name-join">PLAYER NAME</Label>
+              <Label htmlFor="player-name-join">{t('playerName')}</Label>
               <Input
                 id="player-name-join"
                 value={playerName}
                 onChange={(e) => setPlayerName(e.target.value)}
-                placeholder="ENTER YOUR NAME"
+                placeholder={t('enterYourName')}
                 className="uppercase"
                 maxLength={20}
                 data-testid="input-player-name-join"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="room-code">ROOM CODE</Label>
+              <Label htmlFor="room-code">{t('roomCode')}</Label>
               <Input
                 id="room-code"
                 value={roomCode}
                 onChange={(e) => setRoomCode(e.target.value)}
-                placeholder="ENTER ROOM CODE"
+                placeholder={t('enterRoomCode')}
                 className="uppercase"
                 maxLength={10}
                 data-testid="input-room-code"
@@ -131,14 +165,14 @@ export function JoinScreen({ onCreateRoom, onJoinRoom }: JoinScreenProps) {
                 data-testid="button-confirm-join"
                 className="flex-1"
               >
-                JOIN
+                {t('join')}
               </NeonButton>
               <NeonButton 
                 variant="outline"
                 onClick={() => setMode('menu')}
                 data-testid="button-back-join"
               >
-                BACK
+                {t('back')}
               </NeonButton>
             </div>
           </div>

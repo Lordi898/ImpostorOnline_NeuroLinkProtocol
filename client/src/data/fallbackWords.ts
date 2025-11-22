@@ -1,9 +1,10 @@
+
 export interface WordData {
   word: string;
   category: string;
 }
 
-export const fallbackWords: WordData[] = [
+export const fallbackWordsEN: WordData[] = [
   { word: "DRONE", category: "TECH" },
   { word: "FIREWALL", category: "TECH" },
   { word: "BITCOIN", category: "TECH" },
@@ -116,7 +117,123 @@ export const fallbackWords: WordData[] = [
   { word: "LAPTOP", category: "OBJECT" }
 ];
 
-export function getRandomWord(): WordData {
-  const index = Math.floor(Math.random() * fallbackWords.length);
-  return fallbackWords[index];
+export const fallbackWordsES: WordData[] = [
+  { word: "DRON", category: "TECNOLOGÍA" },
+  { word: "CORTAFUEGOS", category: "TECNOLOGÍA" },
+  { word: "BITCOIN", category: "TECNOLOGÍA" },
+  { word: "CUÁNTICO", category: "TECNOLOGÍA" },
+  { word: "HOLOGRAMA", category: "TECNOLOGÍA" },
+  { word: "RED NEURONAL", category: "TECNOLOGÍA" },
+  { word: "CYBERDECK", category: "TECNOLOGÍA" },
+  { word: "VISOR VR", category: "TECNOLOGÍA" },
+  { word: "ANDROIDE", category: "TECNOLOGÍA" },
+  { word: "BLOCKCHAIN", category: "TECNOLOGÍA" },
+  { word: "SUSHI", category: "COMIDA" },
+  { word: "PIZZA", category: "COMIDA" },
+  { word: "RAMEN", category: "COMIDA" },
+  { word: "BURRITO", category: "COMIDA" },
+  { word: "CROISSANT", category: "COMIDA" },
+  { word: "TACO", category: "COMIDA" },
+  { word: "EMPANADILLA", category: "COMIDA" },
+  { word: "GOFRE", category: "COMIDA" },
+  { word: "TORTITA", category: "COMIDA" },
+  { word: "ROSQUILLA", category: "COMIDA" },
+  { word: "ASTRONAUTA", category: "PROFESIÓN" },
+  { word: "DETECTIVE", category: "PROFESIÓN" },
+  { word: "CIRUJANO", category: "PROFESIÓN" },
+  { word: "PILOTO", category: "PROFESIÓN" },
+  { word: "HACKER", category: "PROFESIÓN" },
+  { word: "CAZARRECOMPENSAS", category: "PROFESIÓN" },
+  { word: "ESPÍA", category: "PROFESIÓN" },
+  { word: "CIENTÍFICO", category: "PROFESIÓN" },
+  { word: "NINJA", category: "PROFESIÓN" },
+  { word: "MERCENARIO", category: "PROFESIÓN" },
+  { word: "PARÍS", category: "UBICACIÓN" },
+  { word: "TOKIO", category: "UBICACIÓN" },
+  { word: "MARTE", category: "UBICACIÓN" },
+  { word: "SUBMARINO", category: "UBICACIÓN" },
+  { word: "CASINO", category: "UBICACIÓN" },
+  { word: "ESTACIÓN ESPACIAL", category: "UBICACIÓN" },
+  { word: "VOLCÁN", category: "UBICACIÓN" },
+  { word: "ÁRTICO", category: "UBICACIÓN" },
+  { word: "METRÓPOLIS", category: "UBICACIÓN" },
+  { word: "SUBTERRÁNEO", category: "UBICACIÓN" },
+  { word: "MOTOCICLETA", category: "VEHÍCULO" },
+  { word: "HELICÓPTERO", category: "VEHÍCULO" },
+  { word: "NAVE ESPACIAL", category: "VEHÍCULO" },
+  { word: "SUBMARINO", category: "VEHÍCULO" },
+  { word: "AEROTABLA", category: "VEHÍCULO" },
+  { word: "MOCHILA COHETE", category: "VEHÍCULO" },
+  { word: "MÁQUINA DEL TIEMPO", category: "VEHÍCULO" },
+  { word: "TANQUE", category: "VEHÍCULO" },
+  { word: "YATE", category: "VEHÍCULO" },
+  { word: "TRAJE MECH", category: "VEHÍCULO" },
+  { word: "LÁSER", category: "ARMA" },
+  { word: "KATANA", category: "ARMA" },
+  { word: "PISTOLA DE PLASMA", category: "ARMA" },
+  { word: "DISPOSITIVO EMP", category: "ARMA" },
+  { word: "BASTÓN ATURDIDOR", category: "ARMA" },
+  { word: "CAÑÓN DE RIEL", category: "ARMA" },
+  { word: "CAÑÓN SÓNICO", category: "ARMA" },
+  { word: "BOMBA DE GRAVEDAD", category: "ARMA" },
+  { word: "ENJAMBRE NANO", category: "ARMA" },
+  { word: "CONTROL MENTAL", category: "ARMA" },
+  { word: "UNICORNIO", category: "ANIMAL" },
+  { word: "DRAGÓN", category: "ANIMAL" },
+  { word: "FÉNIX", category: "ANIMAL" },
+  { word: "GRIFO", category: "ANIMAL" },
+  { word: "KRAKEN", category: "ANIMAL" },
+  { word: "PERRO CYBORG", category: "ANIMAL" },
+  { word: "PULPO", category: "ANIMAL" },
+  { word: "ÁGUILA", category: "ANIMAL" },
+  { word: "PANTERA", category: "ANIMAL" },
+  { word: "LOBO", category: "ANIMAL" },
+  { word: "GUITARRA", category: "INSTRUMENTO" },
+  { word: "THEREMÍN", category: "INSTRUMENTO" },
+  { word: "SINTETIZADOR", category: "INSTRUMENTO" },
+  { word: "BATERÍA", category: "INSTRUMENTO" },
+  { word: "TOCADISCOS", category: "INSTRUMENTO" },
+  { word: "BAJO ELÉCTRICO", category: "INSTRUMENTO" },
+  { word: "KEYTAR", category: "INSTRUMENTO" },
+  { word: "ARMÓNICA", category: "INSTRUMENTO" },
+  { word: "SAXOFÓN", category: "INSTRUMENTO" },
+  { word: "VIOLÍN", category: "INSTRUMENTO" },
+  { word: "HACKEO", category: "ACTIVIDAD" },
+  { word: "SURF", category: "ACTIVIDAD" },
+  { word: "PARACAIDISMO", category: "ACTIVIDAD" },
+  { word: "PARKOUR", category: "ACTIVIDAD" },
+  { word: "GRAFITI", category: "ACTIVIDAD" },
+  { word: "CARRERAS", category: "ACTIVIDAD" },
+  { word: "MEDITACIÓN", category: "ACTIVIDAD" },
+  { word: "PROGRAMACIÓN", category: "ACTIVIDAD" },
+  { word: "VIDEOJUEGOS", category: "ACTIVIDAD" },
+  { word: "BAILE", category: "ACTIVIDAD" },
+  { word: "INVISIBILIDAD", category: "SUPERPODER" },
+  { word: "TELEQUINESIS", category: "SUPERPODER" },
+  { word: "VIAJE EN EL TIEMPO", category: "SUPERPODER" },
+  { word: "CAMBIAFORMAS", category: "SUPERPODER" },
+  { word: "SÚPER VELOCIDAD", category: "SUPERPODER" },
+  { word: "LECTURA DE MENTE", category: "SUPERPODER" },
+  { word: "TELETRANSPORTACIÓN", category: "SUPERPODER" },
+  { word: "VISIÓN DE RAYOS X", category: "SUPERPODER" },
+  { word: "INMORTALIDAD", category: "SUPERPODER" },
+  { word: "VUELO", category: "SUPERPODER" },
+  { word: "LUCES NEÓN", category: "OBJETO" },
+  { word: "RELOJ INTELIGENTE", category: "OBJETO" },
+  { word: "AURICULARES", category: "OBJETO" },
+  { word: "GAFAS DE SOL", category: "OBJETO" },
+  { word: "MÁQUINA EXPENDEDORA", category: "OBJETO" },
+  { word: "MÁQUINA ARCADE", category: "OBJETO" },
+  { word: "PROYECTOR", category: "OBJETO" },
+  { word: "ESPEJO", category: "OBJETO" },
+  { word: "CAJA FUERTE", category: "OBJETO" },
+  { word: "ORDENADOR PORTÁTIL", category: "OBJETO" }
+];
+
+export function getRandomWord(language: 'en' | 'es' = 'en'): WordData {
+  const words = language === 'es' ? fallbackWordsES : fallbackWordsEN;
+  const index = Math.floor(Math.random() * words.length);
+  return words[index];
 }
+
+export const fallbackWords = fallbackWordsEN;
