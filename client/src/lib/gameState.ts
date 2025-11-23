@@ -1,7 +1,7 @@
 import { type Player } from '@/components/PlayerList';
 import { type WordData } from '@/data/fallbackWords';
 
-export type GamePhase = 'join' | 'lobby' | 'role-reveal' | 'gameplay' | 'voting' | 'game-over';
+export type GamePhase = 'join' | 'lobby' | 'role-reveal' | 'gameplay' | 'clue-display' | 'voting' | 'voting-results' | 'game-over';
 
 export interface ChatMessage {
   id: string;
@@ -15,6 +15,22 @@ export interface GamePlayer extends Player {
   isImpostor?: boolean;
   hasVoted?: boolean;
   votedFor?: string;
+  isEliminated?: boolean;
+}
+
+export interface Clue {
+  id: string;
+  senderId: string;
+  senderName: string;
+  text: string;
+  timestamp: number;
+}
+
+export interface VotingResult {
+  playerId: string;
+  playerName: string;
+  voteCount: number;
+  voters: { voterId: string; voterName: string }[];
 }
 
 export interface GameState {
@@ -32,6 +48,13 @@ export interface GameState {
   impostorPlayerId?: string;
   chatMessages: ChatMessage[];
   turnRotationOffset: number;
+  votingFrequency: number;
+  roundCount: number;
+  currentRound: number;
+  currentClue?: Clue;
+  votingTimeRemaining: number;
+  votingResults: VotingResult[];
+  eliminatedPlayerId?: string;
 }
 
 export class GameStateManager {
@@ -50,7 +73,12 @@ export class GameStateManager {
       playOnHost: false,
       votes: new Map(),
       chatMessages: [],
-      turnRotationOffset: 0
+      turnRotationOffset: 0,
+      votingFrequency: 1,
+      roundCount: 0,
+      currentRound: 0,
+      votingTimeRemaining: 45,
+      votingResults: [],
     };
   }
 
@@ -184,14 +212,75 @@ export class GameStateManager {
       impostorPlayerId: undefined,
       chatMessages: [],
       turnRotationOffset: this.state.turnRotationOffset + 1,
-      players: this.state.players.map(p => ({
+      roundCount: 0,
+      currentRound: 0,
+      votingTimeRemaining: 45,
+      votingResults: [],
+      eliminatedPlayerId: undefined,
+      currentClue: undefined,
+      players: this.state.players.filter(p => !p.isEliminated).map(p => ({
         ...p,
         isImpostor: false,
         hasVoted: false,
-        votedFor: undefined
+        votedFor: undefined,
+        isEliminated: false
       }))
     };
     this.notifyStateChange();
+  }
+
+  addClue(clue: Clue): void {
+    this.state.currentClue = clue;
+    this.notifyStateChange();
+  }
+
+  setVotingFrequency(frequency: number): void {
+    this.state.votingFrequency = frequency;
+    this.notifyStateChange();
+  }
+
+  eliminatePlayer(playerId: string): void {
+    this.state.players = this.state.players.map(p => 
+      p.id === playerId ? { ...p, isEliminated: true } : p
+    );
+    this.notifyStateChange();
+  }
+
+  removeEliminatedPlayers(): void {
+    this.state.players = this.state.players.filter(p => !p.isEliminated);
+    this.notifyStateChange();
+  }
+
+  setVotingResults(results: VotingResult[]): void {
+    this.state.votingResults = results;
+    this.notifyStateChange();
+  }
+
+  incrementRound(): void {
+    this.state.currentRound++;
+    this.notifyStateChange();
+  }
+
+  startVotingTimer(): void {
+    if (this.turnTimer) {
+      clearInterval(this.turnTimer);
+    }
+
+    this.turnTimer = window.setInterval(() => {
+      if (this.state.votingTimeRemaining > 0) {
+        this.state.votingTimeRemaining--;
+        this.notifyStateChange();
+      } else {
+        this.endVotingTimer();
+      }
+    }, 1000);
+  }
+
+  endVotingTimer(): void {
+    if (this.turnTimer) {
+      clearInterval(this.turnTimer);
+      this.turnTimer = null;
+    }
   }
 
   getLocalPlayer(): GamePlayer | undefined {
