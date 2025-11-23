@@ -955,7 +955,7 @@
   }
 
   [data-style="retro"] .glitch-effect {
-    animation: chromatic-aberration 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+    animation: chromatic-aberration 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite, low-fps 0.5s steps(8, end) infinite;
   }
 
   [data-style="retro"] .text-glow,
@@ -965,12 +965,12 @@
   }
 
   [data-style="retro"] .glow-pulse {
-    animation: arcade-flash 0.8s ease-in-out infinite;
+    animation: arcade-flash 0.8s ease-in-out infinite, low-fps 0.5s steps(8, end) infinite;
     box-shadow: 2px 2px 0px currentColor, 4px 4px 0px rgba(180, 100, 255, 0.3) !important;
   }
 
-  [data-style="retro"] body {
-    animation: low-fps 0.5s steps(8, end) infinite;
+  [data-style="retro"] .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite, low-fps 0.5s steps(8, end) infinite;
   }
 
   /* RETRO specific glow colors */
