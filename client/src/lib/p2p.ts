@@ -55,7 +55,10 @@ export class P2PManager {
     return new Promise((resolve, reject) => {
       try {
         this.peer = new Peer(this.roomCode, {
-          debug: 1,
+          host: window.location.hostname,
+          port: parseInt(window.location.port || '5000'),
+          path: '/peerjs',
+          debug: 3,
         });
 
         this.peer.on('open', (id) => {
@@ -95,7 +98,10 @@ export class P2PManager {
     return new Promise((resolve, reject) => {
       try {
         this.peer = new Peer({
-          debug: 1,
+          host: window.location.hostname,
+          port: parseInt(window.location.port || '5000'),
+          path: '/peerjs',
+          debug: 3,
         });
 
         this.peer.on('open', (id) => {

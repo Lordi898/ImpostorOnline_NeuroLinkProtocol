@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { GoogleGenAI } from '@google/genai';
+import { PeerServer } from 'peer';
 import { loginUser, registerUser } from './auth';
 import { storage } from './storage';
 
@@ -274,5 +275,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   const httpServer = createServer(app);
+  
+  // Initialize PeerServer for P2P connections
+  PeerServer({ http: httpServer, path: '/peerjs', debug: true });
+  
   return httpServer;
 }
