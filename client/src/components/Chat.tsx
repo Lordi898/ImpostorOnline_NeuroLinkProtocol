@@ -6,6 +6,7 @@ import { Send } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { type ChatMessage } from '@/lib/gameState';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/lib/languageContext';
 
 interface ChatProps {
   messages: ChatMessage[];
@@ -21,6 +22,7 @@ export function Chat({ messages, onSendMessage, localPlayerId, activePlayerId, s
   const [error, setError] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const scrollViewport = scrollAreaRef.current?.querySelector('[data-radix-scroll-area-viewport]');
@@ -60,7 +62,7 @@ export function Chat({ messages, onSendMessage, localPlayerId, activePlayerId, s
 
   return (
     <TerminalCard 
-      title="COMMUNICATIONS" 
+      title={t('communications')} 
       className={cn("flex flex-col", className)}
       scanline={false}
     >
@@ -128,7 +130,7 @@ export function Chat({ messages, onSendMessage, localPlayerId, activePlayerId, s
               setError('');
             }}
             placeholder="TYPE MESSAGE..."
-            className="flex-1 uppercase font-mono text-sm md:text-base min-h-[44px]"
+            className="flex-1 font-mono text-sm md:text-base min-h-[44px]"
             maxLength={200}
             data-testid="input-chat-message"
           />

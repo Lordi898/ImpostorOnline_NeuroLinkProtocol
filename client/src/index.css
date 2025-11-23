@@ -708,6 +708,16 @@
     font-size: 0.75rem;
     padding: 8px 12px;
   }
+
+  /* RETRO chat message text sizing */
+  [data-style="retro"] [data-testid*="chat-message"] p {
+    font-size: 0.65rem !important;
+    line-height: 1.2 !important;
+  }
+
+  [data-style="retro"] [data-testid*="chat-message"] .text-xs {
+    font-size: 0.6rem !important;
+  }
 }
 
 /**
