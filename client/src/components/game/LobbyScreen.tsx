@@ -102,7 +102,7 @@ export function LobbyScreen({
                   <Label htmlFor="voting-freq" className="text-sm">
                     {t('votingFrequency')}
                   </Label>
-                  <Select value={votingFrequency.toString()} onValueChange={(val) => onVotingFrequencyChange(parseInt(val))}>
+                  <Select value={(votingFrequency || 1).toString()} onValueChange={(val) => onVotingFrequencyChange(parseInt(val))}>
                     <SelectTrigger id="voting-freq" className="w-full">
                       <SelectValue />
                     </SelectTrigger>
