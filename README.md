@@ -1,50 +1,191 @@
-# NEURO-LINK: Protocol Zero
+# 🎮 NEURO-LINK: Protocol Zero
 
 <div align="center">
 
-![NEURO-LINK Banner](https://img.shields.io/badge/NEURO--LINK-Protocol%20Zero-00ff00?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEyIDJMMiAyMmgyMHoiIGZpbGw9IiMwMGZmMDAiLz48L3N2Zz4=)
+### A Cyberpunk P2P Social Deduction Game
 
-**A cyberpunk-themed P2P local-multiplayer social deduction game**
+![Cyberpunk Badge](https://img.shields.io/badge/CYBERPUNK-HACKER%20EDITION-00ff41?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEyIDJMMiAyMmgyMHoiIGZpbGw9IiMwMGZmNDEiIHN0cm9rZT0iIzAwZmY0MSIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9zdmc+)
+![Built with React](https://img.shields.io/badge/React-18-61dafb?style=flat-square&logo=react)
+![WebRTC P2P](https://img.shields.io/badge/P2P-WebRTC-ff00ff?style=flat-square)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178c6?style=flat-square&logo=typescript)
 
-[![Run on Replit](https://replit.com/badge/github/yourusername/neuro-link)](https://replit.com/@yourusername/neuro-link)
-[![License: MIT](https://img.shields.io/badge/License-MIT-00ff00.svg)](LICENSE)
-[![Made with React](https://img.shields.io/badge/React-18.3-61dafb?logo=react)](https://react.dev)
-[![WebRTC](https://img.shields.io/badge/WebRTC-PeerJS-ff00ff)](https://peerjs.com)
+---
 
-[Play Now](https://neuro-link.replit.app) • [Report Bug](https://github.com/yourusername/neuro-link/issues) • [Request Feature](https://github.com/yourusername/neuro-link/issues)
+## 🚀 **PLAY NOW** 🚀
+
+### ⚡ **[CLICK HERE TO START PLAYING](https://ab4a5654-59f7-444d-b1e9-7e9cad3ae137-00-oqwxi6jaeh6a.riker.replit.dev/)**
+
+**No installation needed • No app required • Play instantly in your browser**
+
+---
+
+</div>
+
+## 📖 About the Game
+
+**NEURO-LINK: Protocol Zero** is a high-energy, real-time multiplayer social deduction game that challenges players to identify an impostor among them. Set in a retro-futuristic cyberpunk world with neon aesthetics and terminal-style interfaces, this game delivers intense gameplay and strategic thinking.
+
+### 🎯 **Perfect for School Classrooms**
+- ✅ **No Installation Needed** - Play directly from any web browser
+- ✅ **Works on School Computers** - Just visit the link, no downloads
+- ✅ **Instant Setup** - No accounts, no logins, just play
+- ✅ **LAN & Online** - Play with computers in the same room or across the internet
+- ✅ **Educational Value** - Builds critical thinking, communication, and strategy skills
+
+---
+
+## 🎮 **Core Features**
+
+<table>
+<tr>
+<td width="50%">
+
+### 🌐 **P2P Networking**
+Direct player-to-player connections via WebRTC. No central servers, pure peer-to-peer gameplay.
+
+### 🎨 **Immersive Cyberpunk UI**
+Retro-futuristic terminal aesthetic with neon effects, CRT scanlines, and glitch animations.
+
+</td>
+<td width="50%">
+
+### 🎭 **Role-Based Gameplay**
+Hackers vs Impostor mechanics with dynamic word generation and AI integration.
+
+### 📱 **Full Mobile Support**
+Touch controls, haptic feedback, responsive design for any device.
+
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td width="50%">
+
+### 🤖 **AI-Powered Words**
+Google Gemini API for dynamic word generation with offline fallback database.
+
+### 📊 **QR Code Joining**
+Scan to join rooms instantly - perfect for classroom use.
+
+</td>
+<td width="50%">
+
+### 🔊 **Retro Sound Design**
+Web Audio API synthesized effects and cyberpunk soundtrack.
+
+### ⚡ **Real-Time Sync**
+Host-authoritative state management for seamless multiplayer experience.
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🎯 **How to Play**
+
+### **Setup Phase** (2-8 Players)
+```
+┌─────────────────────────────────────┐
+│  1. HOST creates a room             │
+│  2. PLAYERS join via code or QR     │
+│  3. HOST configures settings        │
+│  4. CLICK START GAME                │
+└─────────────────────────────────────┘
+```
+
+### **Gameplay Flow**
+```
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  ROLE REVEAL                       ┃
+┃  👨‍💻 Hackers: Know the word         ┃
+┃  🕵️ Impostor: Don't know the word  ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+           ⬇️
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  DESCRIPTION PHASE (60s each)      ┃
+┃  Describe the word without saying  ┃
+┃  it. Impostor tries to blend in.   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+           ⬇️
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  VOTING PHASE                      ┃
+┃  Everyone votes on who is the      ┃
+┃  impostor. Majority decides.       ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+           ⬇️
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  VICTORY CONDITIONS               ┃
+┃  ✅ Hackers Win: Found impostor   ┃
+┃  ✅ Impostor Wins: Avoided vote   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+```
+
+### **Special Abilities**
+- 💣 **Noise Bomb** (Impostor) - Disrupt one player's turn once per game
+
+---
+
+## 🛠️ **Technology Stack**
+
+<div align="center">
+
+| Layer | Technology |
+|-------|-----------|
+| **Frontend** | React 18 • TypeScript • Tailwind CSS • Radix UI |
+| **Networking** | PeerJS • WebRTC • WebSocket |
+| **Backend** | Express.js • Google Gemini API • Web Audio API |
+| **Build Tools** | Vite • ESBuild • TSX • npm |
+| **Features** | QRCode.react • Framer Motion • Haptic API |
 
 </div>
 
 ---
 
-## 🎮 About The Game
+## 📁 **Project Structure**
 
-**NEURO-LINK: Protocol Zero** is a real-time multiplayer social deduction game where players work together to identify an impostor among them. Set in a retro-futuristic cyberpunk world, players must describe a secret word without saying it directly—except for one player who doesn't know the word and must blend in to avoid detection.
-
-### Key Features
-
-- 🌐 **P2P Networking** - No central server required; players connect directly via WebRTC
-- 🎨 **Cyberpunk Aesthetic** - Terminal-style UI with CRT effects and neon accents
-- 🤖 **AI-Powered Words** - Dynamic word generation using Google Gemini API with offline fallback
-- 📱 **Mobile-Friendly** - Full touch support with haptic feedback and wake lock
-- 🔊 **Synthesized Audio** - Web Audio API for retro sound effects
-- 📊 **QR Code Joining** - Scan to join rooms instantly
-- 🎭 **Role-Based Gameplay** - Hackers vs Impostor mechanics
-- ⚡ **Real-Time Sync** - Host-authoritative state management
+```
+neuro-link/
+├── client/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── game/          # Game screens & logic
+│   │   │   ├── ui/            # Reusable components
+│   │   │   └── ...
+│   │   ├── lib/
+│   │   │   ├── gameController.ts   # Game orchestrator
+│   │   │   ├── gameState.ts        # State management
+│   │   │   ├── p2p.ts             # P2P networking
+│   │   │   ├── gameMaster.ts      # Word generation
+│   │   │   └── progressionContext.tsx # Player progression
+│   │   └── pages/
+│   │       ├── Profile.tsx         # Avatar & theme system
+│   │       └── ...
+│   └── index.html
+├── server/
+│   ├── routes.ts              # API endpoints
+│   └── index.ts              # Express server
+└── shared/
+    └── schema.ts             # Shared types
+```
 
 ---
 
-## 🚀 Quick Start
+## 🚀 **Getting Started**
 
-### Play Online
+### **Option 1: Play Online (Recommended for Classrooms)**
 
-Visit [neuro-link.replit.app](https://neuro-link.replit.app) to start playing immediately!
+Simply visit: **[https://ab4a5654-59f7-444d-b1e9-7e9cad3ae137-00-oqwxi6jaeh6a.riker.replit.dev/](https://ab4a5654-59f7-444d-b1e9-7e9cad3ae137-00-oqwxi6jaeh6a.riker.replit.dev/)**
 
-### Run Locally
+No installation, no registration, no downloads. **Click and play.**
+
+### **Option 2: Run Locally**
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/neuro-link.git
+git clone https://github.com/Lordi898/neuro-link.git
 cd neuro-link
 
 # Install dependencies
@@ -52,203 +193,200 @@ npm install
 
 # Start development server
 npm run dev
+
+# Open http://localhost:5000 in your browser
 ```
 
-The game will be available at `http://localhost:5000`
+### **Option 3: Deploy Your Own Copy**
 
-### Deploy on Replit
-
-[![Run on Replit](https://replit.com/badge/github/yourusername/neuro-link)](https://replit.com/github/yourusername/neuro-link)
-
-1. Click the button above or visit [replit.com/github](https://replit.com/github)
-2. Import this repository
-3. Click "Run" to start the server
-4. Share the URL with your friends to play!
+1. Fork this repository
+2. Deploy to Replit, Vercel, or Netlify
+3. Share the link with your friends
 
 ---
 
-## 🎯 How to Play
+## 🎨 **Visual Customization**
 
-### Setup (2-8 Players)
+### **Three Visual Styles**
+- 🖥️ **Hacker** - Classic terminal black & green
+- 🌌 **Futurista** - Modern cyberpunk purple & cyan
+- 🎮 **Retro** - Arcade 8-bit style
 
-1. **Create a Room** - One player hosts and shares the room code or QR code
-2. **Join the Lobby** - Other players join using the code
-3. **Configure** - Host can enable "Play on Host" mode to participate
-4. **Start Game** - Host initiates when ready
+### **Six Playable Themes**
+- Default themes (Hacker, Futurista, Retro)
+- 🌀 **Matrix Retro** - Classic CRT scanlines effect
+- ✨ **Obsidian Lux** - Elegant golden aesthetic
+- 💎 **Quantum Divinity** - Glassmorphism future tech
 
-### Gameplay
-
-1. **Role Reveal** - Each player sees their role:
-   - **Hackers** 👨‍💻 - Know the secret word
-   - **Impostor** 🕵️ - Don't know the word, must blend in
-
-2. **Description Phase** - Players take turns (60s each) describing the word without saying it
-
-3. **Voting** - After all turns, everyone votes for who they think is the impostor
-
-4. **Victory Conditions**
-   - **Hackers Win** - If they correctly identify the impostor
-   - **Impostor Wins** - If they avoid detection
-
-### Special Abilities
-
-- **Noise Bomb** 💣 - Impostor can disrupt one player's turn (once per game)
+### **Three Color Themes**
+- 🌙 Dark Mode
+- ☀️ Normal Mode
+- ☀️☀️ Light Mode
 
 ---
 
-## 🛠️ Technology Stack
+## 👥 **Progression System**
 
-### Frontend
-- **React 18** - UI framework
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Styling with custom cyberpunk theme
-- **PeerJS** - WebRTC abstraction for P2P networking
-- **Radix UI** - Accessible component primitives
-- **Framer Motion** - Animations
-- **QRCode.react** - QR code generation
-
-### Backend
-- **Express** - API server
-- **Google Gemini API** - AI word generation
-- **Web Audio API** - Sound synthesis
-- **Vibration API** - Haptic feedback
-
-### Build Tools
-- **Vite** - Fast development and building
-- **ESBuild** - Production bundling
-- **TSX** - TypeScript execution
-
----
-
-## 📁 Project Structure
+Players unlock content through gameplay:
 
 ```
-neuro-link/
-├── client/src/
-│   ├── components/        # React components
-│   │   ├── game/         # Game screens
-│   │   └── ui/           # Reusable UI components
-│   ├── lib/
-│   │   ├── gameController.ts   # Main game orchestrator
-│   │   ├── gameState.ts        # State management
-│   │   ├── p2p.ts             # P2P networking
-│   │   ├── gameMaster.ts      # Word generation
-│   │   └── soundManager.ts    # Audio system
-│   └── data/
-│       └── fallbackWords.ts   # Offline word database
-├── server/
-│   ├── routes.ts         # API endpoints
-│   └── app.ts           # Express server
-└── shared/
-    └── schema.ts        # Shared types
+┌──────────────────────────────────────┐
+│  🎯 AVATAR SYSTEM (30 AVATARS)      │
+│  ├─ Tier 1: 10 Starting Avatars    │
+│  ├─ Tier 2: Unlock at Level 2-5    │
+│  └─ Tier 3: Unlock at Level 6-10   │
+├──────────────────────────────────────┤
+│  🎨 THEME UNLOCKS                   │
+│  ├─ Matrix Retro: 3-Win Streak     │
+│  ├─ Obsidian Lux: First Impostor   │
+│  └─ Quantum: 3-Impostor Streak     │
+├──────────────────────────────────────┤
+│  📊 LEVEL SYSTEM (1-10)             │
+│  └─ Gain XP through wins & gameplay │
+└──────────────────────────────────────┘
 ```
 
----
-
-## 🎨 Design Philosophy
-
-The game embraces a **retro-futuristic hacker terminal aesthetic**:
-
-- **Color Palette**: Black background with neon cyan, purple, and green accents
-- **Typography**: JetBrains Mono monospace for that terminal feel
-- **Effects**: CRT scan lines, glitch animations, text glow
-- **Audio**: Web Audio API synthesized bleeps and bloops
-- **Interaction**: Haptic feedback on mobile devices
+### **Admin Mode** (Code: LORDI)
+- Unlock all avatars instantly
+- Reach max level (10)
+- Enable 1v1 games
+- Access all themes
 
 ---
 
-## 🔧 Configuration
+## 🌐 **Multiplayer Features**
 
-### Environment Variables
+### **Room Management**
+- 🔐 Join via unique room codes
+- 📱 Scan QR codes for instant join
+- 👥 Support 2-8 players per room
+- 🔴 Real-time player presence
 
-Create a `.env` file in the root directory:
+### **Social Integration**
+- 💬 In-game chat system
+- 🎙️ Real-time voice support (bring your own)
+- 📊 Win/loss statistics
+- 🏆 Achievement tracking
+
+---
+
+## 📱 **Classroom Use**
+
+<div align="center">
+
+### Perfect for Educational Settings
+
+| Feature | Benefit |
+|---------|---------|
+| **No Installation** | Works on any school computer |
+| **Browser-Based** | No admin rights needed |
+| **Fast Deployment** | Share one link, everyone plays |
+| **LAN Support** | Works without internet (local network) |
+| **Educational** | Teaches strategy & critical thinking |
+| **Monitored** | Teachers can supervise gameplay |
+| **Flexible** | 15-min sessions or full class periods |
+
+</div>
+
+---
+
+## 🔧 **Configuration**
+
+### **Environment Variables** (Optional)
 
 ```env
-# Optional: Google Gemini API key for dynamic word generation
+# Google Gemini API (for enhanced word generation)
 GEMINI_API_KEY=your_api_key_here
 
-# Express session secret
+# Express session security
 SESSION_SECRET=your_random_secret_here
 ```
 
-> **Note**: The game works perfectly without the Gemini API key using the built-in fallback word database.
-
-### Game Settings
-
-- **Player Count**: 2-8 players recommended
-- **Turn Duration**: 60 seconds per player
-- **Role Distribution**: 1 impostor, rest are hackers
-- **Network**: Requires local network or public internet for P2P
+> Game works perfectly with or without Gemini API using fallback database.
 
 ---
 
-## 📱 Mobile Support
+## 🤝 **Contributing**
 
-The game is fully optimized for mobile devices:
-
-- ✅ Responsive touch controls
-- ✅ Haptic feedback on supported devices
-- ✅ Screen wake lock during gameplay
-- ✅ QR code scanning for easy room joining
-- ✅ PWA support for "Add to Home Screen"
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Here's how you can help:
+Contributions welcome! To contribute:
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
+2. Create a feature branch (`git checkout -b feature/YourFeature`)
+3. Commit changes (`git commit -m 'Add YourFeature'`)
+4. Push to branch (`git push origin feature/YourFeature`)
 5. Open a Pull Request
 
 ### Development Guidelines
-
-- Follow the existing code style
-- Maintain the cyberpunk aesthetic
-- Test on both desktop and mobile
-- Update documentation as needed
-
----
-
-## 🐛 Known Limitations
-
-- P2P requires all players on the same local network or public internet
-- Relies on PeerJS cloud signaling server
-- No game state persistence (reloading page loses state)
-- Maximum recommended: 8-10 players per room
+- Maintain cyberpunk aesthetic
+- Test on desktop & mobile
+- Update documentation
+- Follow TypeScript best practices
 
 ---
 
-## 📄 License
+## 🐛 **Known Limitations**
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- Inspired by classic social deduction games like Mafia and Spyfall
-- Built with ❤️ using modern web technologies
-- Cyberpunk aesthetic inspired by retro terminal interfaces
-- PeerJS for making P2P networking accessible
+- P2P requires local network or public internet
+- Relies on PeerJS cloud signaling
+- No game state persistence (reload loses progress)
+- Recommended max: 8-10 players per room
 
 ---
 
-## 📞 Support
+## 📄 **License**
 
-- 🐛 **Bug Reports**: [Open an issue](https://github.com/yourusername/neuro-link/issues)
-- 💡 **Feature Requests**: [Open an issue](https://github.com/yourusername/neuro-link/issues)
-- 💬 **Questions**: Check existing issues or open a new one
+This project is licensed under the MIT License - see [LICENSE](LICENSE) for details.
+
+---
+
+## 👨‍💻 **Creator**
+
+<div align="center">
+
+### **Imanol Magaña** 🎮
+
+**Solo Developer & Game Designer**
+
+🔗 **GitHub:** [@Lordi898](https://github.com/Lordi898)
+
+**Inspired by:** Mafia, Spyfall, Among Us, and retro hacker culture.
+
+Built with ❤️ using modern web technologies.
+
+</div>
+
+---
+
+## 🙏 **Acknowledgments**
+
+- PeerJS for accessible WebRTC networking
+- Google Gemini API for intelligent word generation
+- Radix UI for accessible component primitives
+- The retro gaming and cyberpunk communities
+- All players who test and provide feedback
+
+---
+
+## 📞 **Support & Contact**
+
+- 🐛 **Bug Reports:** [GitHub Issues](https://github.com/Lordi898/neuro-link/issues)
+- 💡 **Feature Requests:** [GitHub Issues](https://github.com/Lordi898/neuro-link/issues)
+- 💬 **Questions:** Open an issue or check existing ones
 
 ---
 
 <div align="center">
 
-**Made with 💚 by the NEURO-LINK team**
+### 🎮 **Ready to Play?** 🎮
 
-[⬆ Back to Top](#neuro-link-protocol-zero)
+## **[👉 CLICK HERE TO PLAY NOW 👈](https://ab4a5654-59f7-444d-b1e9-7e9cad3ae137-00-oqwxi6jaeh6a.riker.replit.dev/)**
+
+### No installation • No registration • Play instantly
+
+---
+
+**Made by Imanol Magaña (@Lordi898) with 💚 and ⚡**
+
+[⬆ Back to Top](#-neuro-link-protocol-zero)
 
 </div>
