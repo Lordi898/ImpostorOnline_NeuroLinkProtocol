@@ -465,10 +465,17 @@
 }
 
 [data-style="retro"][data-theme="dark"] h1 {
-  font-size: 2.5rem !important;
+  font-size: 3.5rem !important;
   letter-spacing: 0.15em;
   margin: 1rem 0;
   line-height: 1.2;
+}
+
+[data-style="retro"][data-theme="dark"] .text-7xl,
+[data-style="retro"][data-theme="dark"] .text-8xl,
+[data-style="retro"][data-theme="dark"] .text-9xl {
+  font-size: 4rem !important;
+  line-height: 1.1;
 }
 
 [data-style="retro"][data-theme="dark"] h2 {
@@ -551,10 +558,17 @@
 }
 
 [data-style="retro"][data-theme="normal"] h1 {
-  font-size: 2.5rem !important;
+  font-size: 3.5rem !important;
   letter-spacing: 0.15em;
   margin: 1rem 0;
   line-height: 1.2;
+}
+
+[data-style="retro"][data-theme="normal"] .text-7xl,
+[data-style="retro"][data-theme="normal"] .text-8xl,
+[data-style="retro"][data-theme="normal"] .text-9xl {
+  font-size: 4rem !important;
+  line-height: 1.1;
 }
 
 [data-style="retro"][data-theme="normal"] h2 {
@@ -637,10 +651,17 @@
 }
 
 [data-style="retro"][data-theme="light"] h1 {
-  font-size: 2.5rem !important;
+  font-size: 3.5rem !important;
   letter-spacing: 0.15em;
   margin: 1rem 0;
   line-height: 1.2;
+}
+
+[data-style="retro"][data-theme="light"] .text-7xl,
+[data-style="retro"][data-theme="light"] .text-8xl,
+[data-style="retro"][data-theme="light"] .text-9xl {
+  font-size: 4rem !important;
+  line-height: 1.1;
 }
 
 [data-style="retro"][data-theme="light"] h2 {
