@@ -199,23 +199,38 @@ export class GameController {
       return;
     }
 
-    this.gameState.setState({ playOnHost, adminMode });
+    const players = this.gameState.getState().players;
+    
+    // In admin mode with 1-2 players, force playOnHost to true
+    const finalPlayOnHost = adminMode && players.length <= 2 ? true : playOnHost;
+    
+    this.gameState.setState({ playOnHost: finalPlayOnHost, adminMode });
 
     const secretWord = await generateSecretWord(language);
     console.log('[GAME] Generated secret word:', secretWord);
 
-    const players = this.gameState.getState().players;
-    const eligiblePlayers = playOnHost 
+    const eligiblePlayers = finalPlayOnHost 
       ? players 
       : players.filter(p => !p.isHost);
 
-    if (eligiblePlayers.length < 3 && !adminMode) {
-      console.error('[GAME] Not enough players');
+    const minPlayers = adminMode ? 1 : 3;
+    if (eligiblePlayers.length < minPlayers) {
+      console.error('[GAME] Not enough players. Need at least ' + minPlayers + ', have ' + eligiblePlayers.length);
+      return;
+    }
+
+    if (eligiblePlayers.length === 0) {
+      console.error('[GAME] No eligible players found');
       return;
     }
 
     const impostorIndex = Math.floor(Math.random() * eligiblePlayers.length);
-    const impostorId = eligiblePlayers[impostorIndex].id;
+    const impostorId = eligiblePlayers[impostorIndex]?.id;
+    
+    if (!impostorId) {
+      console.error('[GAME] Failed to select impostor. eligiblePlayers:', eligiblePlayers);
+      return;
+    }
 
     this.gameState.assignRoles(impostorId, secretWord);
     this.gameState.setPhase('role-reveal');

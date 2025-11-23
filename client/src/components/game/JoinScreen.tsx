@@ -127,6 +127,15 @@ export function JoinScreen({ onCreateRoom, onJoinRoom, onProfile }: JoinScreenPr
           >
             ADMIN
           </NeonButton>
+          <NeonButton 
+            variant="outline"
+            size="lg"
+            onClick={onProfile}
+            data-testid="button-profile"
+            className="w-full"
+          >
+            PROFILE
+          </NeonButton>
         </div>
       )}
       {mode === 'admin' && (
