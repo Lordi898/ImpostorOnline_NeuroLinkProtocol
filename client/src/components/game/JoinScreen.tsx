@@ -8,20 +8,25 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useLanguage } from '@/lib/languageContext';
 import { useProgression } from '@/lib/progressionContext';
+import { useAuth } from '@/lib/authContext';
+import { LogOut } from 'lucide-react';
 
 interface JoinScreenProps {
   onCreateRoom: (playerName: string, adminMode?: boolean) => void;
   onJoinRoom: (playerName: string, roomCode: string, adminMode?: boolean) => void;
   onProfile?: () => void;
+  onLeaderboard?: () => void;
+  onMatchHistory?: () => void;
 }
 
-export function JoinScreen({ onCreateRoom, onJoinRoom, onProfile }: JoinScreenProps) {
+export function JoinScreen({ onCreateRoom, onJoinRoom, onProfile, onLeaderboard, onMatchHistory }: JoinScreenProps) {
   const [playerName, setPlayerName] = useState('');
   const [roomCode, setRoomCode] = useState('');
   const [adminCode, setAdminCode] = useState('');
   const [mode, setMode] = useState<'menu' | 'create' | 'join' | 'admin'>('menu');
   const { language, setLanguage, theme, setTheme, styleMode, setStyleMode, t } = useLanguage();
-  const { activateAdminMode } = useProgression();
+  const { activateAdminMode, profile } = useProgression();
+  const { user, logout } = useAuth();
   const [isAdminMode, setIsAdminMode] = useState(false);
 
   const handleAdminCode = () => {
@@ -47,7 +52,24 @@ export function JoinScreen({ onCreateRoom, onJoinRoom, onProfile }: JoinScreenPr
   };
 
   return (
-    <div className="min-h-screen p-4 flex flex-col items-center justify-center gap-8 scanline">
+    <div className="min-h-screen p-4 flex flex-col items-center justify-center gap-8 scanline relative">
+      {/* User Header */}
+      <div className="absolute top-4 right-4 flex items-center gap-2 text-xs md:text-sm border border-primary/30 rounded px-3 py-2 bg-background/80">
+        <div className="flex flex-col text-right">
+          <span className="text-primary font-mono font-bold">{user?.username || 'USER'}</span>
+          <span className="text-muted-foreground text-xs">LVL {profile?.rankLevel || 1}</span>
+        </div>
+        <NeonButton 
+          size="sm" 
+          variant="ghost" 
+          onClick={logout}
+          data-testid="button-logout"
+          className="h-6 w-6 p-0"
+        >
+          <LogOut className="w-4 h-4" />
+        </NeonButton>
+      </div>
+
       <div className="text-center space-y-2 md:space-y-4 flex flex-col items-center">
         <GlitchText className="text-5xl md:text-7xl block">
           {t('neuroLink')}
@@ -113,6 +135,23 @@ export function JoinScreen({ onCreateRoom, onJoinRoom, onProfile }: JoinScreenPr
         </button>
       </div>
 
+      {/* User Header with Logout */}
+      <div className="absolute top-4 right-4 flex items-center gap-3 text-xs md:text-sm border border-primary/30 rounded px-4 py-2 bg-background/95 backdrop-blur-sm">
+        <div className="flex flex-col text-right">
+          <span className="text-primary font-mono font-bold" data-testid="text-username">{user?.username || 'USER'}</span>
+          <span className="text-muted-foreground text-xs" data-testid="text-level">LVL {profile?.rankLevel || 1}</span>
+        </div>
+        <NeonButton 
+          size="sm"
+          variant="ghost"
+          onClick={logout}
+          data-testid="button-logout"
+          className="h-7 w-7 p-0"
+        >
+          <LogOut className="w-4 h-4" />
+        </NeonButton>
+      </div>
+
       {mode === 'menu' && (
         <div className="flex flex-col gap-4 w-full max-w-xs">
           <NeonButton 
@@ -131,6 +170,42 @@ export function JoinScreen({ onCreateRoom, onJoinRoom, onProfile }: JoinScreenPr
             className="w-full"
           >
             {t('joinGame')}
+          </NeonButton>
+          
+          <TerminalCard title="STATS">
+            <div className="space-y-1 text-xs md:text-sm">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">WINS:</span>
+                <span className="text-primary font-bold" data-testid="text-total-wins">{profile?.totalWins || 0}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">IMPOSTOR:</span>
+                <span className="text-primary font-bold" data-testid="text-impostor-wins">{profile?.impostorWins || 0}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">XP:</span>
+                <span className="text-primary font-bold" data-testid="text-xp">{profile?.xp || 0}</span>
+              </div>
+            </div>
+          </TerminalCard>
+          
+          <NeonButton 
+            variant="secondary"
+            size="lg"
+            onClick={onLeaderboard}
+            data-testid="button-leaderboard"
+            className="w-full"
+          >
+            GLOBAL RANKINGS
+          </NeonButton>
+          <NeonButton 
+            variant="secondary"
+            size="lg"
+            onClick={onMatchHistory}
+            data-testid="button-match-history"
+            className="w-full"
+          >
+            MATCH HISTORY
           </NeonButton>
           <NeonButton 
             variant="outline"

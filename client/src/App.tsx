@@ -196,6 +196,8 @@ function AppContent() {
           onCreateRoom={handleCreateRoom}
           onJoinRoom={handleJoinRoom}
           onProfile={handleViewProfile}
+          onLeaderboard={() => setGameState(prev => ({ ...prev, phase: 'leaderboard' }))}
+          onMatchHistory={() => setGameState(prev => ({ ...prev, phase: 'match-history' }))}
         />
       )}
 
