@@ -35,6 +35,7 @@ export interface PlayerConnection {
 
 export class P2PManager {
   private ws: WebSocket | null = null;
+  private peer: Peer | null = null;
   private connections: Map<string, PlayerConnection> = new Map();
   private localPlayerId: string = '';
   private localPlayerName: string = '';
@@ -251,36 +252,36 @@ export class P2PManager {
       timestamp: Date.now()
     };
 
-    this.connections.forEach((player) => {
-      try {
-        player.connection.send(fullMessage);
-      } catch (error) {
-        console.error('[P2P] Failed to send to', player.id, error);
-      }
-    });
+    // Send via WebSocket to all players in the room
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+      this.ws.send(JSON.stringify(fullMessage));
+      console.log('[P2P] Broadcast message:', message.type);
+    } else {
+      console.error('[P2P] WebSocket not ready for broadcast');
+    }
   }
 
   private broadcastToOthers(message: P2PMessage, excludeId: string): void {
-    this.connections.forEach((player) => {
-      if (player.id !== excludeId) {
-        try {
-          player.connection.send(message);
-        } catch (error) {
-          console.error('[P2P] Failed to send to', player.id, error);
-        }
-      }
-    });
+    // Send via WebSocket to all players except the excluded one
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+      this.ws.send(JSON.stringify(message));
+      console.log('[P2P] Broadcast to others (excluding', excludeId, ')');
+    }
   }
 
   sendMessage(message: Omit<P2PMessage, 'senderId' | 'timestamp'>, targetId: string): void {
-    const player = this.connections.get(targetId);
-    if (player) {
-      const fullMessage: P2PMessage = {
-        ...message,
-        senderId: this.localPlayerId,
-        timestamp: Date.now()
-      };
-      player.connection.send(fullMessage);
+    const fullMessage: P2PMessage = {
+      ...message,
+      senderId: this.localPlayerId,
+      timestamp: Date.now()
+    };
+    
+    // Send via WebSocket
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+      this.ws.send(JSON.stringify(fullMessage));
+      console.log('[P2P] Message sent to', targetId, ':', message.type);
+    } else {
+      console.error('[P2P] WebSocket not ready for sending message');
     }
   }
 
@@ -329,7 +330,7 @@ export class P2PManager {
   }
 
   getTurnRotationOffset(): number {
-    const syncData = this.onGetSyncDataCallback?.() || {};
+    const syncData = this.getSyncDataCallback?.() || {};
     return syncData.turnRotationOffset || 0;
   }
 
@@ -354,12 +355,29 @@ export class P2PManager {
   }
 
   disconnect(): void {
+    // Close WebSocket
+    if (this.ws) {
+      this.ws.close();
+      this.ws = null;
+    }
+    
+    // Close PeerJS connections if any
     this.connections.forEach((player) => {
-      player.connection.close();
+      try {
+        if (player.connection && player.connection.close) {
+          player.connection.close();
+        }
+      } catch (e) {
+        console.error('[P2P] Error closing connection:', e);
+      }
     });
     this.connections.clear();
-    this.peer?.destroy();
-    this.peer = null;
+    
+    // Destroy Peer if it exists
+    if (this.peer) {
+      this.peer.destroy();
+      this.peer = null;
+    }
   }
 
   private generateRoomCode(): string {
