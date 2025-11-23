@@ -15,6 +15,8 @@ interface JoinScreenProps {
 }
 
 export function JoinScreen({ onCreateRoom, onJoinRoom, onProfile }: JoinScreenProps) {
+
+export function JoinScreen({ onCreateRoom, onJoinRoom, onProfile }: JoinScreenProps) {
   const [playerName, setPlayerName] = useState('');
   const [roomCode, setRoomCode] = useState('');
   const [adminCode, setAdminCode] = useState('');

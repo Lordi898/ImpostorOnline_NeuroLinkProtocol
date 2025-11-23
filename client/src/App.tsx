@@ -15,6 +15,7 @@ import { ObligatoryVotingScreen } from "@/components/game/ObligatoryVotingScreen
 import { VotingScreen } from "@/components/game/VotingScreen";
 import { VotingResultsScreen } from "@/components/game/VotingResultsScreen";
 import { GameOverScreen } from "@/components/game/GameOverScreen";
+import { Profile } from "@/pages/Profile";
 import { GameController } from "@/lib/gameController";
 import { type GameState } from "@/lib/gameState";
 import { type Player } from "@/components/PlayerList";
@@ -76,7 +77,15 @@ function App() {
   };
 
   const handleStartGame = async () => {
-    await gameController.startGame(gameState.playOnHost);
+    await gameController.startGame(gameState.playOnHost, 'en', gameState.adminMode);
+  };
+
+  const handleViewProfile = () => {
+    setGameState(prev => ({ ...prev, phase: 'profile' }));
+  };
+
+  const handleBackFromProfile = () => {
+    setGameState(prev => ({ ...prev, phase: 'join' }));
   };
 
   const handleEndTurn = () => {
@@ -140,7 +149,12 @@ function App() {
                 <JoinScreen
                   onCreateRoom={handleCreateRoom}
                   onJoinRoom={handleJoinRoom}
+                  onProfile={handleViewProfile}
                 />
+              )}
+
+              {gameState.phase === 'profile' && (
+                <Profile onBack={handleBackFromProfile} />
               )}
 
               {gameState.phase === 'lobby' && (

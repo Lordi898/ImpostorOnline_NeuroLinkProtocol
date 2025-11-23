@@ -193,13 +193,13 @@ export class GameController {
     }
   }
 
-  async startGame(playOnHost: boolean, language: 'en' | 'es' = 'en'): Promise<void> {
+  async startGame(playOnHost: boolean, language: 'en' | 'es' = 'en', adminMode: boolean = false): Promise<void> {
     if (!this.gameState.isLocalPlayerHost()) {
       console.error('[GAME] Only host can start game');
       return;
     }
 
-    this.gameState.setState({ playOnHost });
+    this.gameState.setState({ playOnHost, adminMode });
 
     const secretWord = await generateSecretWord(language);
     console.log('[GAME] Generated secret word:', secretWord);
@@ -209,7 +209,7 @@ export class GameController {
       ? players 
       : players.filter(p => !p.isHost);
 
-    if (eligiblePlayers.length < 3) {
+    if (eligiblePlayers.length < 3 && !adminMode) {
       console.error('[GAME] Not enough players');
       return;
     }
