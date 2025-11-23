@@ -103,15 +103,17 @@ export function JoinScreen({ onCreateRoom, onJoinRoom, onProfile }: JoinScreenPr
         </div>
       </div>
 
-      {/* Admin Button - Top Right */}
-      <button
-        onClick={() => setMode('admin')}
-        data-testid="button-admin-mode"
-        className="fixed top-4 right-4 px-2 py-1 text-xs bg-primary/20 border border-primary rounded hover-elevate active-elevate-2"
-        title="Admin Mode"
-      >
-        ⚙
-      </button>
+      {/* Admin Button - Centered Below Theme */}
+      <div className="flex justify-center mt-2">
+        <button
+          onClick={() => setMode('admin')}
+          data-testid="button-admin-mode"
+          className="px-2 py-1 text-xs bg-primary/20 border border-primary rounded hover-elevate active-elevate-2"
+          title="Admin Mode"
+        >
+          ⚙
+        </button>
+      </div>
 
       {mode === 'menu' && (
         <div className="flex flex-col gap-4 w-full max-w-xs">

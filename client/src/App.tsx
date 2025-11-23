@@ -163,8 +163,8 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>
         <ProgressionProvider>
-          <ThemeApplier />
           <TooltipProvider>
+            <ThemeApplier />
             <div className="min-h-screen bg-background text-foreground">
               {gameState.phase === 'join' && (
                 <JoinScreen
