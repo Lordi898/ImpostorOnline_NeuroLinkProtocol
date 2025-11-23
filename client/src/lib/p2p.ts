@@ -34,7 +34,7 @@ export interface PlayerConnection {
 }
 
 export class P2PManager {
-  private peer: Peer | null = null;
+  private ws: WebSocket | null = null;
   private connections: Map<string, PlayerConnection> = new Map();
   private localPlayerId: string = '';
   private localPlayerName: string = '';
@@ -57,6 +57,9 @@ export class P2PManager {
       
       this.roomCode = data.roomCode;
       this.localPlayerId = data.playerId;
+      
+      // Connect via WebSocket
+      this.connectWebSocket(playerName);
       
       console.log('[P2P] Room created with code:', this.roomCode);
       return this.roomCode;
@@ -83,11 +86,63 @@ export class P2PManager {
       const data = await response.json();
       this.localPlayerId = data.playerId;
       
+      // Connect via WebSocket
+      this.connectWebSocket(playerName);
+      
       console.log('[P2P] Joined room:', roomCode, 'as player:', this.localPlayerId);
     } catch (error) {
       console.error('[P2P] Error joining room:', error);
       throw error;
     }
+  }
+
+  private connectWebSocket(playerName: string): void {
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsUrl = `${protocol}//${window.location.host}/ws?room=${this.roomCode}&playerId=${this.localPlayerId}&name=${encodeURIComponent(playerName)}`;
+    
+    this.ws = new WebSocket(wsUrl);
+    
+    this.ws.onopen = () => {
+      console.log('[P2P] WebSocket connected to room:', this.roomCode);
+    };
+    
+    this.ws.onmessage = (event) => {
+      try {
+        const message = JSON.parse(event.data);
+        
+        if (message.type === 'player-joined') {
+          const { playerId, playerName } = message.data;
+          const playerConnection: PlayerConnection = {
+            id: playerId,
+            name: playerName,
+            connection: null as any,
+            isHost: false
+          };
+          this.connections.set(playerId, playerConnection);
+          this.onPlayerJoinCallback?.(playerConnection);
+          console.log('[P2P] Player joined:', playerName);
+        } else if (message.type === 'player-left') {
+          const { playerId } = message.data;
+          this.connections.delete(playerId);
+          this.onPlayerLeaveCallback?.(playerId);
+          console.log('[P2P] Player left:', playerId);
+        } else {
+          this.onMessageCallback?.(message);
+        }
+      } catch (error) {
+        console.error('[P2P] Message parse error:', error);
+      }
+    };
+    
+    this.ws.onerror = (error) => {
+      console.error('[P2P] WebSocket error:', error);
+      this.onConnectionErrorCallback?.(new Error('WebSocket error'));
+    };
+    
+    this.ws.onclose = () => {
+      console.log('[P2P] WebSocket closed');
+      this.ws = null;
+    };
   }
 
   private handleIncomingConnection(conn: DataConnection): void {

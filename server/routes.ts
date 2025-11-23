@@ -1,5 +1,6 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+import { WebSocketServer, WebSocket } from 'ws';
 import { GoogleGenAI } from '@google/genai';
 import { loginUser, registerUser } from './auth';
 import { storage } from './storage';
@@ -273,14 +274,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Simple in-memory room storage
-  const rooms = new Map<string, { hostId: string; players: Set<string>; }>();
+  // Room storage with WebSocket connections
+  interface RoomPlayer {
+    id: string;
+    name: string;
+    ws: WebSocket;
+  }
+
+  interface GameRoom {
+    hostId: string;
+    players: Map<string, RoomPlayer>;
+  }
+
+  const rooms = new Map<string, GameRoom>();
 
   app.post('/api/rooms/create', (req, res) => {
     try {
       const roomCode = Math.random().toString(36).substring(2, 8).toUpperCase();
       const hostId = Math.random().toString(36).substring(2, 15);
-      rooms.set(roomCode, { hostId, players: new Set([hostId]) });
+      rooms.set(roomCode, { hostId, players: new Map() });
       res.json({ roomCode, playerId: hostId });
     } catch (error) {
       res.status(400).json({ message: 'ERROR' });
@@ -294,7 +306,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!room) return res.status(400).json({ message: 'ROOM_NOT_FOUND' });
       
       const playerId = Math.random().toString(36).substring(2, 15);
-      room.players.add(playerId);
       res.json({ roomCode, playerId, hostId: room.hostId });
     } catch (error) {
       res.status(400).json({ message: 'ERROR' });
@@ -313,5 +324,86 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   const httpServer = createServer(app);
+
+  // WebSocket server for real-time communication
+  const wss = new WebSocketServer({ noServer: true });
+
+  httpServer.on('upgrade', (req, socket, head) => {
+    if (req.url?.startsWith('/ws')) {
+      wss.handleUpgrade(req, socket, head, (ws) => {
+        wss.emit('connection', ws, req);
+      });
+    } else {
+      socket.destroy();
+    }
+  });
+
+  wss.on('connection', (ws, req) => {
+    const url = new URL(req.url || '', `http://${req.headers.host}`);
+    const roomCode = url.searchParams.get('room');
+    const playerId = url.searchParams.get('playerId');
+    const playerName = url.searchParams.get('name') || 'Player';
+
+    if (!roomCode || !playerId) {
+      ws.close();
+      return;
+    }
+
+    let room = rooms.get(roomCode);
+    if (!room) {
+      room = { hostId: playerId, players: new Map() };
+      rooms.set(roomCode, room);
+    }
+
+    const player: RoomPlayer = { id: playerId, name: playerName, ws };
+    room.players.set(playerId, player);
+
+    // Notify others that player joined
+    room.players.forEach((p) => {
+      if (p.id !== playerId && p.ws.readyState === WebSocket.OPEN) {
+        p.ws.send(JSON.stringify({
+          type: 'player-joined',
+          data: { playerId, playerName }
+        }));
+      }
+    });
+
+    ws.on('message', (data) => {
+      try {
+        const message = JSON.parse(data.toString());
+        // Broadcast to room
+        room?.players.forEach((p) => {
+          if (p.ws.readyState === WebSocket.OPEN) {
+            p.ws.send(JSON.stringify({
+              ...message,
+              senderId: playerId
+            }));
+          }
+        });
+      } catch (error) {
+        console.error('[WS] Message parse error:', error);
+      }
+    });
+
+    ws.on('close', () => {
+      room?.players.delete(playerId);
+      room?.players.forEach((p) => {
+        if (p.ws.readyState === WebSocket.OPEN) {
+          p.ws.send(JSON.stringify({
+            type: 'player-left',
+            data: { playerId }
+          }));
+        }
+      });
+      if (room?.players.size === 0) {
+        rooms.delete(roomCode);
+      }
+    });
+
+    ws.on('error', (error) => {
+      console.error('[WS] Error:', error);
+    });
+  });
+
   return httpServer;
 }
