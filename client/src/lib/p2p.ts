@@ -129,8 +129,12 @@ export class P2PManager {
         this.peer.on('error', (error) => {
           console.error('[P2P] Peer error:', error);
           this.onConnectionErrorCallback?.(error);
+          reject(error);
+        });
+      } catch (error) {
+        console.error('[P2P] Error creating peer:', error);
         reject(error);
-      });
+      }
     });
   }
 
