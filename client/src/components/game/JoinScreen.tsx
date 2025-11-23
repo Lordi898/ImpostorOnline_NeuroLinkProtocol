@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useLanguage } from '@/lib/languageContext';
+import { useProgression } from '@/lib/progressionContext';
 
 interface JoinScreenProps {
   onCreateRoom: (playerName: string, adminMode?: boolean) => void;
@@ -20,11 +21,13 @@ export function JoinScreen({ onCreateRoom, onJoinRoom, onProfile }: JoinScreenPr
   const [adminCode, setAdminCode] = useState('');
   const [mode, setMode] = useState<'menu' | 'create' | 'join' | 'admin'>('menu');
   const { language, setLanguage, theme, setTheme, styleMode, setStyleMode, t } = useLanguage();
+  const { activateAdminMode } = useProgression();
   const [isAdminMode, setIsAdminMode] = useState(false);
 
   const handleAdminCode = () => {
     if (adminCode === 'LORDI') {
       setIsAdminMode(true);
+      activateAdminMode();
       setMode('menu');
       setAdminCode('');
     }

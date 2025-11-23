@@ -22,6 +22,7 @@ interface ProgressionContextType {
   setCurrentAvatar: (avatarId: string) => void;
   isUnlocked: (avatarId: string) => boolean;
   isThemeUnlocked: (themeId: string) => boolean;
+  activateAdminMode: () => void;
 }
 
 const defaultProfile: UserProfile = {
@@ -149,8 +150,29 @@ export function ProgressionProvider({ children }: { children: ReactNode }) {
     return profile.unlockedThemes.includes(themeId);
   };
 
+  const activateAdminMode = () => {
+    const allAvatarIds = [
+      'avatar-1', 'avatar-2', 'avatar-3', 'avatar-4', 'avatar-5',
+      'avatar-6', 'avatar-7', 'avatar-8', 'avatar-9', 'avatar-10',
+      'avatar-11', 'avatar-12', 'avatar-13', 'avatar-14', 'avatar-15',
+      'avatar-16', 'avatar-17', 'avatar-18', 'avatar-19', 'avatar-20',
+      'avatar-21', 'avatar-22', 'avatar-23', 'avatar-24', 'avatar-25',
+      'avatar-26', 'avatar-27', 'avatar-28', 'avatar-29', 'avatar-30'
+    ];
+
+    const allThemes = ['hacker', 'futurista', 'retro', 'matrix-retro', 'obsidian-lux', 'quantum-divinity'];
+
+    setProfile({
+      ...profile,
+      xp: 10000,
+      rankLevel: 10,
+      unlockedAvatars: allAvatarIds,
+      unlockedThemes: allThemes,
+    });
+  };
+
   return (
-    <ProgressionContext.Provider value={{ profile, addXp, addWin, addLoss, unlockAvatar, unlockTheme, setCurrentAvatar, isUnlocked, isThemeUnlocked }}>
+    <ProgressionContext.Provider value={{ profile, addXp, addWin, addLoss, unlockAvatar, unlockTheme, setCurrentAvatar, isUnlocked, isThemeUnlocked, activateAdminMode }}>
       {children}
     </ProgressionContext.Provider>
   );
