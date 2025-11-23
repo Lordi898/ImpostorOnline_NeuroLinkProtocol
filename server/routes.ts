@@ -4,6 +4,7 @@ import { WebSocketServer, WebSocket } from 'ws';
 import { GoogleGenAI } from '@google/genai';
 import { loginUser, registerUser } from './auth';
 import { storage } from './storage';
+import { ExpressPeerServer } from 'peerjs-server';
 
 interface WordData {
   word: string;

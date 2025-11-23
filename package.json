@@ -63,6 +63,7 @@
     "passport-local": "^1.0.0",
     "peer": "^1.0.2",
     "peerjs": "^1.5.5",
+    "peerjs-server": "^0.2.9",
     "qrcode.react": "^4.2.0",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
