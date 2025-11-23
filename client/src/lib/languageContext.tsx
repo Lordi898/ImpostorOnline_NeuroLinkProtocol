@@ -124,7 +124,7 @@ const translations = {
     'create': 'CREAR',
     'back': 'ATRÁS',
     'joinExistingGame': 'UNIRSE A PARTIDA EXISTENTE',
-    'roomCode': 'CÓDIGO DE SALA',
+    'roomCode': 'CODIGO DE SALA',
     'enterRoomCode': 'INTRODUCE CÓDIGO',
     'join': 'UNIRSE',
     'theme': 'TEMA',
