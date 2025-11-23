@@ -53,23 +53,6 @@ export function JoinScreen({ onCreateRoom, onJoinRoom, onProfile, onLeaderboard,
 
   return (
     <div className="min-h-screen p-4 flex flex-col items-center justify-center gap-8 scanline relative">
-      {/* User Header */}
-      <div className="absolute top-4 right-4 flex items-center gap-2 text-xs md:text-sm border border-primary/30 rounded px-3 py-2 bg-background/80">
-        <div className="flex flex-col text-right">
-          <span className="text-primary font-mono font-bold">{user?.username || 'USER'}</span>
-          <span className="text-muted-foreground text-xs">LVL {profile?.rankLevel || 1}</span>
-        </div>
-        <NeonButton 
-          size="sm" 
-          variant="ghost" 
-          onClick={logout}
-          data-testid="button-logout"
-          className="h-6 w-6 p-0"
-        >
-          <LogOut className="w-4 h-4" />
-        </NeonButton>
-      </div>
-
       <div className="text-center space-y-2 md:space-y-4 flex flex-col items-center">
         <GlitchText className="text-5xl md:text-7xl block">
           {t('neuroLink')}
@@ -133,23 +116,6 @@ export function JoinScreen({ onCreateRoom, onJoinRoom, onProfile, onLeaderboard,
         >
           ⚙
         </button>
-      </div>
-
-      {/* User Header with Logout */}
-      <div className="absolute top-4 right-4 flex items-center gap-3 text-xs md:text-sm border border-primary/30 rounded px-4 py-2 bg-background/95 backdrop-blur-sm">
-        <div className="flex flex-col text-right">
-          <span className="text-primary font-mono font-bold" data-testid="text-username">{user?.username || 'USER'}</span>
-          <span className="text-muted-foreground text-xs" data-testid="text-level">LVL {profile?.rankLevel || 1}</span>
-        </div>
-        <NeonButton 
-          size="sm"
-          variant="ghost"
-          onClick={logout}
-          data-testid="button-logout"
-          className="h-7 w-7 p-0"
-        >
-          <LogOut className="w-4 h-4" />
-        </NeonButton>
       </div>
 
       {mode === 'menu' && (

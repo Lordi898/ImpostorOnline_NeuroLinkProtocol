@@ -23,6 +23,7 @@ import { Profile } from "@/pages/Profile";
 import { GameController } from "@/lib/gameController";
 import { type GameState } from "@/lib/gameState";
 import { type Player } from "@/components/PlayerList";
+import { LogOut } from "lucide-react";
 
 const gameController = new GameController();
 
@@ -38,9 +39,10 @@ function ThemeApplier() {
 
 function AppContent() {
   // All hooks must be called unconditionally BEFORE any returns
-  const { user, loading: authLoading } = useAuth();
+  const { user, loading: authLoading, logout } = useAuth();
   const [gameState, setGameState] = useState<GameState>(gameController.getState());
   const { toast } = useToast();
+  const { profile } = useProgression();
 
   // Setup game controller
   useEffect(() => {
@@ -190,6 +192,24 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* User Header - visible on all screens */}
+      {gameState.phase === 'join' && (
+        <div className="absolute top-4 right-4 flex items-center gap-3 text-xs md:text-sm border border-primary/30 rounded px-4 py-2 bg-background/95 backdrop-blur-sm z-50">
+          <div className="flex flex-col text-right">
+            <span className="text-primary font-mono font-bold" data-testid="text-username">{user?.username || 'USER'}</span>
+            <span className="text-muted-foreground text-xs" data-testid="text-level">LVL {profile?.rankLevel || 1}</span>
+          </div>
+          <button
+            onClick={logout}
+            data-testid="button-logout"
+            className="p-1 hover:bg-primary/20 rounded transition-colors"
+            title="Logout"
+          >
+            <LogOut className="w-4 h-4 text-primary" />
+          </button>
+        </div>
+      )}
+
       {gameState.phase === 'join' && (
         <JoinScreen
           onCreateRoom={handleCreateRoom}
