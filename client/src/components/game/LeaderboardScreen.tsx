@@ -28,7 +28,7 @@ export function LeaderboardScreen({ onBack }: LeaderboardScreenProps) {
 
   return (
     <div className="min-h-screen p-4 flex flex-col gap-6 scanline">
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex items-center justify-between gap-2 flex-wrap">
         <h1 className="text-2xl md:text-4xl font-bold text-primary font-mono">
           GLOBAL RANKINGS
         </h1>
@@ -47,14 +47,14 @@ export function LeaderboardScreen({ onBack }: LeaderboardScreenProps) {
               {wins.map((entry: any, idx: number) => (
                 <div
                   key={entry.userId}
-                  className="flex items-center justify-between text-xs md:text-sm border-b border-primary/30 pb-1"
+                  className="flex items-center justify-between gap-2 text-xs md:text-sm border-b border-primary/30 pb-1"
                   data-testid={`leaderboard-wins-${idx}`}
                 >
-                  <div className="flex items-center gap-2">
-                    <span className="text-secondary font-bold w-6">#{idx + 1}</span>
-                    <span className="font-mono">{entry.username}</span>
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span className="text-secondary font-bold flex-shrink-0">#{idx + 1}</span>
+                    <span className="font-mono truncate">{entry.username}</span>
                   </div>
-                  <span className="text-primary font-bold">{entry.totalWins} W</span>
+                  <span className="text-primary font-bold flex-shrink-0">{entry.totalWins} W</span>
                 </div>
               ))}
             </div>
@@ -72,14 +72,14 @@ export function LeaderboardScreen({ onBack }: LeaderboardScreenProps) {
               {impostor.map((entry: any, idx: number) => (
                 <div
                   key={entry.userId}
-                  className="flex items-center justify-between text-xs md:text-sm border-b border-primary/30 pb-1"
+                  className="flex items-center justify-between gap-2 text-xs md:text-sm border-b border-primary/30 pb-1"
                   data-testid={`leaderboard-impostor-${idx}`}
                 >
-                  <div className="flex items-center gap-2">
-                    <span className="text-secondary font-bold w-6">#{idx + 1}</span>
-                    <span className="font-mono">{entry.username}</span>
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span className="text-secondary font-bold flex-shrink-0">#{idx + 1}</span>
+                    <span className="font-mono truncate">{entry.username}</span>
                   </div>
-                  <span className="text-primary font-bold">{entry.impostorWins} W</span>
+                  <span className="text-primary font-bold flex-shrink-0">{entry.impostorWins} W</span>
                 </div>
               ))}
             </div>

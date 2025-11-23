@@ -23,7 +23,7 @@ export function MatchHistoryScreen({ onBack }: MatchHistoryScreenProps) {
 
   return (
     <div className="min-h-screen p-4 flex flex-col gap-6 scanline">
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex items-center justify-between gap-2 flex-wrap">
         <h1 className="text-2xl md:text-4xl font-bold text-primary font-mono">
           MATCH HISTORY
         </h1>
@@ -43,11 +43,11 @@ export function MatchHistoryScreen({ onBack }: MatchHistoryScreenProps) {
                 className="border-l-2 border-primary/50 pl-3 py-2 text-xs md:text-sm"
                 data-testid={`match-history-${idx}`}
               >
-                <div className="flex items-center justify-between gap-2">
-                  <span className="font-mono font-bold text-secondary">
+                <div className="flex items-center justify-between gap-2 flex-wrap">
+                  <span className="font-mono font-bold text-secondary truncate">
                     {match.secretWord}
                   </span>
-                  <span className="text-primary">
+                  <span className="text-primary flex-shrink-0">
                     {match.playerCount} players
                   </span>
                 </div>
