@@ -49,6 +49,8 @@ const translations = {
     'playOnThisDevice': 'PLAY ON THIS DEVICE',
     'initiateProtocol': 'INITIATE PROTOCOL',
     'minimumPlayers': 'MINIMUM 3 PLAYERS REQUIRED',
+    'leaveGame': 'LEAVE GAME',
+    'endGame': 'END GAME (ADMIN)',
     
     // Role Reveal
     'youAreImpostor': 'YOU ARE THE IMPOSTOR',
@@ -148,6 +150,8 @@ const translations = {
     'playOnThisDevice': 'JUGAR EN ESTE DISPOSITIVO',
     'initiateProtocol': 'INICIAR PROTOCOLO',
     'minimumPlayers': 'MÍNIMO 3 JUGADORES REQUERIDOS',
+    'leaveGame': 'ABANDONAR PARTIDA',
+    'endGame': 'TERMINAR PARTIDA (ADMIN)',
     
     // Role Reveal
     'youAreImpostor': 'ERES EL IMPOSTOR',

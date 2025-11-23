@@ -102,6 +102,17 @@ export function JoinScreen({ onCreateRoom, onJoinRoom, onProfile }: JoinScreenPr
           </Select>
         </div>
       </div>
+
+      {/* Admin Button - Top Right */}
+      <button
+        onClick={() => setMode('admin')}
+        data-testid="button-admin-mode"
+        className="fixed top-4 right-4 px-2 py-1 text-xs bg-primary/20 border border-primary rounded hover-elevate active-elevate-2"
+        title="Admin Mode"
+      >
+        ⚙
+      </button>
+
       {mode === 'menu' && (
         <div className="flex flex-col gap-4 w-full max-w-xs">
           <NeonButton 
@@ -120,15 +131,6 @@ export function JoinScreen({ onCreateRoom, onJoinRoom, onProfile }: JoinScreenPr
             className="w-full"
           >
             {t('joinGame')}
-          </NeonButton>
-          <NeonButton 
-            variant="outline"
-            size="lg"
-            onClick={() => setMode('admin')}
-            data-testid="button-admin-mode"
-            className="w-full"
-          >
-            ADMIN
           </NeonButton>
           <NeonButton 
             variant="outline"

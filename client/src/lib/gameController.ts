@@ -193,6 +193,32 @@ export class GameController {
     }
   }
 
+  leaveGame(): void {
+    this.p2p.disconnect();
+    this.gameState.setState({
+      phase: 'join',
+      players: [],
+      roomCode: '',
+      localPlayerId: '',
+      hostPlayerId: ''
+    });
+  }
+
+  endGameAdmin(): void {
+    this.p2p.broadcast({
+      type: 'game-ended-admin',
+      data: { message: 'Game ended by admin - no XP awarded' }
+    });
+    this.gameState.setState({
+      phase: 'join',
+      players: [],
+      roomCode: '',
+      localPlayerId: '',
+      hostPlayerId: ''
+    });
+    this.p2p.disconnect();
+  }
+
   async startGame(playOnHost: boolean, language: 'en' | 'es' = 'en', adminMode: boolean = false): Promise<void> {
     if (!this.gameState.isLocalPlayerHost()) {
       console.error('[GAME] Only host can start game');

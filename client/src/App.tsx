@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
 import { LanguageProvider } from "@/lib/languageContext";
-import { ProgressionProvider } from "@/lib/progressionContext";
+import { ProgressionProvider, useProgression } from "@/lib/progressionContext";
 import { JoinScreen } from "@/components/game/JoinScreen";
 import { LobbyScreen } from "@/components/game/LobbyScreen";
 import { RoleRevealScreen } from "@/components/game/RoleRevealScreen";
@@ -138,6 +138,16 @@ function App() {
     gameController.setVotingFrequency(frequency);
   };
 
+  const handleLeaveGame = () => {
+    gameController.leaveGame();
+    setGameState(prev => ({ ...prev, phase: 'join' }));
+  };
+
+  const handleEndGame = () => {
+    gameController.endGameAdmin();
+    setGameState(prev => ({ ...prev, phase: 'join' }));
+  };
+
   const localPlayer = gameState.players.find(p => p.id === gameState.localPlayerId);
   const isHost = gameState.localPlayerId === gameState.hostPlayerId;
   const isImpostor = localPlayer?.isImpostor || false;
@@ -182,6 +192,8 @@ function App() {
                   votingFrequency={gameState.votingFrequency}
                   onVotingFrequencyChange={handleSetVotingFrequency}
                   onKickPlayer={handleKickPlayer}
+                  onLeaveGame={handleLeaveGame}
+                  onEndGame={gameState.adminMode ? handleEndGame : undefined}
                   adminMode={gameState.adminMode}
                 />
               )}

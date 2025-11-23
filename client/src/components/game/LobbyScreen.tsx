@@ -25,6 +25,8 @@ interface LobbyScreenProps {
   votingFrequency: number;
   onVotingFrequencyChange: (frequency: number) => void;
   onKickPlayer: (playerId: string) => void;
+  onLeaveGame?: () => void;
+  onEndGame?: () => void;
   adminMode?: boolean;
 }
 
@@ -41,6 +43,8 @@ export function LobbyScreen({
   votingFrequency,
   onVotingFrequencyChange,
   onKickPlayer,
+  onLeaveGame,
+  onEndGame,
   adminMode = false
 }: LobbyScreenProps) {
   const { language, setLanguage, theme, setTheme, styleMode, setStyleMode, t } = useLanguage();
@@ -172,16 +176,42 @@ export function LobbyScreen({
         </div>
       </div>
 
-      {isHost && (players.length >= 3 || adminMode) && (
-        <NeonButton 
-          size="lg"
-          onClick={onStartGame}
-          data-testid="button-start-game"
-          className="min-w-[200px]"
-        >
-          {t('initiateProtocol')}
-        </NeonButton>
-      )}
+      <div className="flex gap-4 flex-wrap justify-center">
+        {isHost && (players.length >= 3 || adminMode) && (
+          <NeonButton 
+            size="lg"
+            onClick={onStartGame}
+            data-testid="button-start-game"
+            className="min-w-[200px]"
+          >
+            {t('initiateProtocol')}
+          </NeonButton>
+        )}
+
+        {onLeaveGame && (
+          <NeonButton 
+            size="lg"
+            variant="outline"
+            onClick={onLeaveGame}
+            data-testid="button-leave-game"
+            className="min-w-[200px]"
+          >
+            {t('leaveGame')}
+          </NeonButton>
+        )}
+
+        {adminMode && onEndGame && (
+          <NeonButton 
+            size="lg"
+            variant="outline"
+            onClick={onEndGame}
+            data-testid="button-end-game-admin"
+            className="min-w-[200px]"
+          >
+            {t('endGame')}
+          </NeonButton>
+        )}
+      </div>
 
       {isHost && players.length < 3 && !adminMode && (
         <p className="text-muted-foreground text-sm">
