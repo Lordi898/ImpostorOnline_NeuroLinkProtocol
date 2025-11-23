@@ -53,25 +53,37 @@ export class P2PManager {
     this.roomCode = this.generateRoomCode();
 
     return new Promise((resolve, reject) => {
-      this.peer = new Peer(this.roomCode, {
-        debug: 2,
-      });
+      try {
+        this.peer = new Peer(this.roomCode, {
+          debug: 1,
+        });
 
-      this.peer.on('open', (id) => {
-        this.localPlayerId = id;
-        console.log('[P2P] Room created with code:', this.roomCode);
-        resolve(this.roomCode);
-      });
+        this.peer.on('open', (id) => {
+          this.localPlayerId = id;
+          console.log('[P2P] Room created with code:', this.roomCode, 'peer ID:', id);
+          resolve(this.roomCode);
+        });
 
-      this.peer.on('connection', (conn) => {
-        this.handleIncomingConnection(conn);
-      });
+        this.peer.on('connection', (conn) => {
+          this.handleIncomingConnection(conn);
+        });
 
-      this.peer.on('error', (error) => {
-        console.error('[P2P] Peer error:', error);
-        this.onConnectionErrorCallback?.(error);
+        this.peer.on('error', (error) => {
+          console.error('[P2P] Peer error:', error);
+          this.onConnectionErrorCallback?.(error);
+          reject(error);
+        });
+
+        // Set timeout for peer initialization
+        setTimeout(() => {
+          if (!this.localPlayerId) {
+            reject(new Error('Peer initialization timeout'));
+          }
+        }, 10000);
+      } catch (error) {
+        console.error('[P2P] Error creating peer:', error);
         reject(error);
-      });
+      }
     });
   }
 
@@ -81,41 +93,42 @@ export class P2PManager {
     this.roomCode = roomCode;
 
     return new Promise((resolve, reject) => {
-      this.peer = new Peer({
-        debug: 2,
-      });
-
-      this.peer.on('open', (id) => {
-        this.localPlayerId = id;
-        console.log('[P2P] Peer ID:', id);
-
-        const conn = this.peer!.connect(roomCode);
-
-        const hostConnection: PlayerConnection = {
-          id: roomCode,
-          name: 'HOST',
-          connection: conn,
-          isHost: true
-        };
-        this.connections.set(roomCode, hostConnection);
-
-        this.setupConnection(conn, playerName, true);
-
-        conn.on('open', () => {
-          console.log('[P2P] Connected to room:', roomCode);
-          resolve();
+      try {
+        this.peer = new Peer({
+          debug: 1,
         });
 
-        conn.on('error', (error) => {
-          console.error('[P2P] Connection error:', error);
+        this.peer.on('open', (id) => {
+          this.localPlayerId = id;
+          console.log('[P2P] Peer ID:', id, 'connecting to room:', roomCode);
+
+          const conn = this.peer!.connect(roomCode);
+
+          const hostConnection: PlayerConnection = {
+            id: roomCode,
+            name: 'HOST',
+            connection: conn,
+            isHost: true
+          };
+          this.connections.set(roomCode, hostConnection);
+
+          this.setupConnection(conn, playerName, true);
+
+          conn.on('open', () => {
+            console.log('[P2P] Connected to room:', roomCode);
+            resolve();
+          });
+
+          conn.on('error', (error) => {
+            console.error('[P2P] Connection error:', error);
+            this.onConnectionErrorCallback?.(error);
+            reject(error);
+          });
+        });
+
+        this.peer.on('error', (error) => {
+          console.error('[P2P] Peer error:', error);
           this.onConnectionErrorCallback?.(error);
-          reject(error);
-        });
-      });
-
-      this.peer.on('error', (error) => {
-        console.error('[P2P] Peer error:', error);
-        this.onConnectionErrorCallback?.(error);
         reject(error);
       });
     });
