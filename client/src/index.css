@@ -1058,6 +1058,45 @@
   [data-style="futurista"] .text-6xl,
   [data-style="futurista"] .text-7xl {
     font-size: clamp(3.5rem, 12vw, 6rem) !important;
+    line-height: 0.9 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* FUTURISTA layout adjustments */
+  [data-style="futurista"] .min-h-screen {
+    padding: 1rem !important;
+    gap: 2rem !important;
+  }
+
+  [data-style="futurista"] .text-center.space-y-4 {
+    gap: 0.5rem !important;
+    margin-bottom: 0 !important;
+  }
+
+  [data-style="futurista"] .text-center.space-y-4 > * {
+    margin: 0 !important;
+  }
+
+  [data-style="futurista"] .text-secondary {
+    font-size: 0.95rem !important;
+    margin: 0.5rem 0 0 0 !important;
+  }
+
+  [data-style="futurista"] .text-sm.text-muted-foreground {
+    font-size: 0.8rem !important;
+    margin: 0.3rem 0 0 0 !important;
+  }
+
+  /* FUTURISTA selector gap */
+  [data-style="futurista"] .flex.gap-4.flex-wrap {
+    gap: 1.5rem !important;
+    margin: 1rem 0 !important;
+  }
+
+  /* FUTURISTA select width */
+  [data-style="futurista"] .w-32 {
+    width: 7rem !important;
   }
 
   /* FUTURISTA labels and text styling */
