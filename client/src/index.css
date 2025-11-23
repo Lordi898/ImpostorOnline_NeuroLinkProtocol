@@ -977,6 +977,16 @@
     text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff;
   }
 
+  .retro-title {
+    font-family: 'VT323', monospace !important;
+    font-size: clamp(2.5rem, 12vw, 8rem) !important;
+    letter-spacing: 0.15em;
+    line-height: 1;
+    font-weight: 700;
+    text-transform: uppercase;
+    filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.5)) drop-shadow(0 6px 12px rgba(255, 20, 147, 0.4));
+  }
+
   .scanline {
     position: relative;
     overflow: hidden;

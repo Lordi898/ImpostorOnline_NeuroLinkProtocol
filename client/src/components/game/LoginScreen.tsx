@@ -61,7 +61,7 @@ export function LoginScreen({ onLoginSuccess }: LoginScreenProps) {
   return (
     <div className="min-h-screen p-4 flex flex-col items-center justify-center gap-8 scanline">
       <div className="text-center space-y-2 md:space-y-4">
-        <GlitchText className="text-5xl md:text-7xl font-bold">
+        <GlitchText retro>
           NEURO-LINK
         </GlitchText>
         <p className="text-secondary text-sm md:text-lg font-mono font-semibold tracking-wider">
