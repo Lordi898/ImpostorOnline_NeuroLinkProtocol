@@ -459,51 +459,39 @@
 
 [data-style="retro"][data-theme="dark"] * {
   font-family: 'Press Start 2P', cursive !important;
-  font-size: 0.75rem !important;
-  letter-spacing: 0.08em;
-  line-height: 1.4;
+  letter-spacing: 0.03em;
 }
 
 [data-style="retro"][data-theme="dark"] h1 {
-  font-size: 3.5rem !important;
-  letter-spacing: 0.15em;
-  margin: 1rem 0;
-  line-height: 1.2;
-}
-
-[data-style="retro"][data-theme="dark"] .text-glow-green {
-  font-size: 4rem !important;
+  letter-spacing: 0.12em;
+  margin: 0;
   line-height: 1.1;
 }
 
 [data-style="retro"][data-theme="dark"] h2 {
-  font-size: 1.8rem !important;
   letter-spacing: 0.12em;
-  margin: 0.8rem 0 0.5rem 0;
-  line-height: 1.2;
+  margin: 0;
+  line-height: 1.1;
 }
 
 [data-style="retro"][data-theme="dark"] h3 {
-  font-size: 1.2rem !important;
   letter-spacing: 0.1em;
-  margin: 0.6rem 0 0.3rem 0;
-  line-height: 1.3;
+  margin: 0;
+  line-height: 1.1;
 }
 
 [data-style="retro"][data-theme="dark"] p {
-  margin: 0.4rem 0;
-  font-size: 0.75rem !important;
+  margin: 0;
 }
 
 [data-style="retro"][data-theme="dark"] label {
-  font-size: 0.65rem !important;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0;
 }
 
 [data-style="retro"][data-theme="dark"] button,
 [data-style="retro"][data-theme="dark"] input,
 [data-style="retro"][data-theme="dark"] textarea {
-  font-size: 0.7rem !important;
+  font-family: 'Press Start 2P', cursive;
 }
 
 /* RETRO - Normal Theme */
@@ -550,51 +538,39 @@
 
 [data-style="retro"][data-theme="normal"] * {
   font-family: 'Press Start 2P', cursive !important;
-  font-size: 0.75rem !important;
-  letter-spacing: 0.08em;
-  line-height: 1.4;
+  letter-spacing: 0.03em;
 }
 
 [data-style="retro"][data-theme="normal"] h1 {
-  font-size: 3.5rem !important;
-  letter-spacing: 0.15em;
-  margin: 1rem 0;
-  line-height: 1.2;
-}
-
-[data-style="retro"][data-theme="normal"] .text-glow-green {
-  font-size: 4rem !important;
+  letter-spacing: 0.12em;
+  margin: 0;
   line-height: 1.1;
 }
 
 [data-style="retro"][data-theme="normal"] h2 {
-  font-size: 1.8rem !important;
   letter-spacing: 0.12em;
-  margin: 0.8rem 0 0.5rem 0;
-  line-height: 1.2;
+  margin: 0;
+  line-height: 1.1;
 }
 
 [data-style="retro"][data-theme="normal"] h3 {
-  font-size: 1.2rem !important;
   letter-spacing: 0.1em;
-  margin: 0.6rem 0 0.3rem 0;
-  line-height: 1.3;
+  margin: 0;
+  line-height: 1.1;
 }
 
 [data-style="retro"][data-theme="normal"] p {
-  margin: 0.4rem 0;
-  font-size: 0.75rem !important;
+  margin: 0;
 }
 
 [data-style="retro"][data-theme="normal"] label {
-  font-size: 0.65rem !important;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0;
 }
 
 [data-style="retro"][data-theme="normal"] button,
 [data-style="retro"][data-theme="normal"] input,
 [data-style="retro"][data-theme="normal"] textarea {
-  font-size: 0.7rem !important;
+  font-family: 'Press Start 2P', cursive;
 }
 
 /* RETRO - Light Theme */
@@ -641,51 +617,39 @@
 
 [data-style="retro"][data-theme="light"] * {
   font-family: 'Press Start 2P', cursive !important;
-  font-size: 0.75rem !important;
-  letter-spacing: 0.08em;
-  line-height: 1.4;
+  letter-spacing: 0.03em;
 }
 
 [data-style="retro"][data-theme="light"] h1 {
-  font-size: 3.5rem !important;
-  letter-spacing: 0.15em;
-  margin: 1rem 0;
-  line-height: 1.2;
-}
-
-[data-style="retro"][data-theme="light"] .text-glow-green {
-  font-size: 4rem !important;
+  letter-spacing: 0.12em;
+  margin: 0;
   line-height: 1.1;
 }
 
 [data-style="retro"][data-theme="light"] h2 {
-  font-size: 1.8rem !important;
   letter-spacing: 0.12em;
-  margin: 0.8rem 0 0.5rem 0;
-  line-height: 1.2;
+  margin: 0;
+  line-height: 1.1;
 }
 
 [data-style="retro"][data-theme="light"] h3 {
-  font-size: 1.2rem !important;
   letter-spacing: 0.1em;
-  margin: 0.6rem 0 0.3rem 0;
-  line-height: 1.3;
+  margin: 0;
+  line-height: 1.1;
 }
 
 [data-style="retro"][data-theme="light"] p {
-  margin: 0.4rem 0;
-  font-size: 0.75rem !important;
+  margin: 0;
 }
 
 [data-style="retro"][data-theme="light"] label {
-  font-size: 0.65rem !important;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0;
 }
 
 [data-style="retro"][data-theme="light"] button,
 [data-style="retro"][data-theme="light"] input,
 [data-style="retro"][data-theme="light"] textarea {
-  font-size: 0.7rem !important;
+  font-family: 'Press Start 2P', cursive;
 }
 
 @layer base {
