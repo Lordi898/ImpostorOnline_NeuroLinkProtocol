@@ -61,17 +61,17 @@ export function LoginScreen({ onLoginSuccess }: LoginScreenProps) {
   return (
     <div className="min-h-screen p-4 flex flex-col items-center justify-center gap-8 scanline">
       <div className="text-center space-y-2 md:space-y-4">
-        <GlitchText className="text-5xl md:text-7xl">
+        <GlitchText className="text-5xl md:text-7xl font-bold">
           NEURO-LINK
         </GlitchText>
-        <p className="text-secondary text-xs md:text-lg">
+        <p className="text-secondary text-sm md:text-lg font-mono font-semibold tracking-wider">
           {mode === 'login' ? 'AUTHENTICATE' : 'CREATE ACCOUNT'}
         </p>
       </div>
 
       <div className="w-full max-w-xs space-y-4 border-2 border-primary rounded-lg p-6 bg-background/50">
         <div className="space-y-2">
-          <Label htmlFor="username" className="text-xs font-mono">USERNAME</Label>
+          <Label htmlFor="username" className="text-sm font-mono font-semibold text-primary">USERNAME</Label>
           <Input
             id="username"
             value={username}
@@ -80,14 +80,14 @@ export function LoginScreen({ onLoginSuccess }: LoginScreenProps) {
               setError('');
             }}
             placeholder="ENTER USERNAME"
-            className="uppercase font-mono"
+            className="uppercase font-mono text-sm"
             disabled={loading}
             data-testid="input-username"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="password" className="text-xs font-mono">PASSWORD</Label>
+          <Label htmlFor="password" className="text-sm font-mono font-semibold text-primary">PASSWORD</Label>
           <Input
             id="password"
             type="password"
@@ -97,14 +97,14 @@ export function LoginScreen({ onLoginSuccess }: LoginScreenProps) {
               setError('');
             }}
             placeholder="ENTER PASSWORD"
-            className="uppercase font-mono"
+            className="uppercase font-mono text-sm"
             disabled={loading}
             data-testid="input-password"
           />
         </div>
 
         {error && (
-          <div className="text-xs text-destructive bg-destructive/10 border border-destructive/30 rounded px-2 py-1 font-mono text-center">
+          <div className="text-sm text-destructive bg-destructive/20 border border-destructive/40 rounded px-3 py-2 font-mono text-center font-semibold">
             {error}
           </div>
         )}
@@ -113,7 +113,7 @@ export function LoginScreen({ onLoginSuccess }: LoginScreenProps) {
           <NeonButton
             onClick={handleSubmit}
             disabled={loading || !username || !password}
-            className="flex-1"
+            className="flex-1 font-bold"
             data-testid="button-auth-submit"
           >
             {mode === 'login' ? 'LOGIN' : 'SIGNUP'}
@@ -125,7 +125,7 @@ export function LoginScreen({ onLoginSuccess }: LoginScreenProps) {
               setError('');
             }}
             disabled={loading}
-            className="flex-1"
+            className="flex-1 font-bold"
             data-testid="button-auth-toggle"
           >
             {mode === 'login' ? 'NEW USER' : 'HAVE ACCOUNT'}
@@ -133,7 +133,7 @@ export function LoginScreen({ onLoginSuccess }: LoginScreenProps) {
         </div>
       </div>
 
-      <p className="text-xs text-muted-foreground text-center max-w-md">
+      <p className="text-sm text-muted-foreground text-center max-w-md font-mono leading-relaxed">
         {mode === 'login'
           ? 'SYNCHRONIZE ACROSS DEVICES. YOUR PROGRESS IS SECURE IN THE NETWORK.'
           : 'CREATE NEW IDENTITY TO ENTER THE NETWORK.'}
