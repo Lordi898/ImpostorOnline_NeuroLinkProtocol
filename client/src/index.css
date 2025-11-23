@@ -1072,10 +1072,16 @@
   [data-style="futurista"] .text-center.space-y-4 {
     gap: 0.5rem !important;
     margin-bottom: 0 !important;
+    text-align: center !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
   }
 
   [data-style="futurista"] .text-center.space-y-4 > * {
     margin: 0 !important;
+    width: 100% !important;
   }
 
   [data-style="futurista"] .text-secondary {
