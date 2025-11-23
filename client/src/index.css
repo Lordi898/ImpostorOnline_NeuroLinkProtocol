@@ -1053,6 +1053,13 @@
     z-index: 1;
   }
 
+  /* FUTURISTA main title sizing */
+  [data-style="futurista"] .text-5xl,
+  [data-style="futurista"] .text-6xl,
+  [data-style="futurista"] .text-7xl {
+    font-size: clamp(3.5rem, 12vw, 6rem) !important;
+  }
+
   /* FUTURISTA labels and text styling */
   [data-style="futurista"] label {
     font-family: 'Orbitron', monospace !important;
